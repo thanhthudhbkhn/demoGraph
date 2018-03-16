@@ -9,3 +9,10 @@ nodeId.feat  The features for each of the nodes that appears in the edge file.
 nodeId.egofeat  The features for the ego user.
 
 nodeId.featnames  The names of each of the feature dimensions. Features are '1' if the user has this property in their profile, and '0' otherwise. This file has been anonymized for facebook users, since the names of the features would reveal private data.
+
+nodeId 0: 
+    lien ket voi 347 node -> file 0.feat co 347 lines.
+    Moi line chua thong tin thuoc tinh cua lien ket (224 thuoc tinh).
+    Thong tin thuoc tinh duoc quy uoc 0 va 1. file featnames chua ten cac thuoc tinh.
+    circle = friends list
+    feature = profile
