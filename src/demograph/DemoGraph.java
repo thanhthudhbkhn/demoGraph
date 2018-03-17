@@ -16,22 +16,18 @@ public class DemoGraph {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        LinkedList list = new  LinkedList();
-        
-        // add some elements
-        list.add("Hello");
-        list.add(2);
-        list.add("Chocolate");
-        list.add("10");
-
-        // print the list
-        System.out.println("LinkedList:" + list);
-
-        // add a new element at the end of the list
-        list.add(2,"Element");
-
-        // print the updated list
-        System.out.println("LinkedList:" + list);
+        List<Integer> list[] = new  LinkedList[500];
+        for(int i=0; i<5; i++) {
+            list[i] = new LinkedList<>();
+        }
+        list[0].add(10);
+        list[1].add(10); list[1].add(20);
+        list[2].add(10);
+        list[3].add(10);
+        list[4].add(10);
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i+" - "+list[i]);
+        }
     }
     
 }
