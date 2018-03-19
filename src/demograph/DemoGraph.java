@@ -5,6 +5,8 @@
  */
 package demograph;
 import java.util.*;
+import java.io.*;
+
 /**
  *
  * @author ThuPT
@@ -15,34 +17,34 @@ public class DemoGraph {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         // TODO code application logic here
         List<Integer> list[] = new  LinkedList[500];
         
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter number of vertices: ");
-        int n = scanner.nextInt();
-        for(int i=0; i<=n; i++) {
-            list[i] = new LinkedList<>();
-        }        
-        System.out.println("Enter number of edges: ");
-        int m = scanner.nextInt();
+        String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
+        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
+//        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
         
-        scanner.nextLine();
-        for(int i=0;i<m;i++) {
-            System.out.println("Enter the edge: ");
-            String edge = scanner.nextLine();
-            if (!"".equals(edge)) {
-                String[] vertes = edge.split(" ");
+        for(int i=0; i<=10; i++) {
+            list[i] = new LinkedList<>();
+        }
+
+        int m = 0;
+        String currentLine = in.readLine();
+        while(currentLine != null){
+            m++;
             
+            if (!"".equals(currentLine)) {
+                String[] vertes = currentLine.split(" ");            
                 int v1 = Integer.parseInt(vertes[0]);
                 int v2 = Integer.parseInt(vertes[1]);
                 list[v1].add(v2);
                 list[v2].add(v1);
             }
+            currentLine = in.readLine();
         }
         
-        for (int i = 0; i <=n; i++) {
+        for (int i = 0; i <=10; i++) {
             System.out.println(i+" - "+list[i]);
         }
     }
