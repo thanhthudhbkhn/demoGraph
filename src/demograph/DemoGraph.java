@@ -46,6 +46,29 @@ public class DemoGraph {
         }
     }
     
+    public static void DFSFunction(int verteId, boolean visited[]) {
+        // Mark the current node as visited and enqueue it
+        visited[verteId]=true; 
+        System.out.print(verteId+" ");
+
+        // Get all adjacent vertices of the vertex 
+        // If a adjacent has not been visited, visit it with DFS
+        int itemCount = list[verteId].size();
+        for (int i = 0; i < itemCount; i++) {
+            int adjacentVerte = list[verteId].get(i);
+            if (visited[adjacentVerte]==false) {
+                DFSFunction(adjacentVerte,visited);
+            }
+        }
+    }
+    
+    public static void DFS(int verteId) {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        boolean visited[] = new boolean[5000];
+        DFSFunction(verteId, visited);        
+    }
+    
     public static void main(String[] args) throws FileNotFoundException, IOException {
         // TODO code application logic here
         //khoi tao mang chua 10 list
@@ -56,8 +79,8 @@ public class DemoGraph {
         }        
         //khai bao path de thao tac voi file
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-//        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
-        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
+        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
+//        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
         
         int m = 0; //so edge cua graph
         int n = 0; //verteId max cua graph
@@ -86,7 +109,11 @@ public class DemoGraph {
         System.out.print("Breadth First Traversal from: ");
         Scanner scn = new Scanner(System.in);
         int v = scn.nextInt();
-        BFS(v);
+//        BFS(v);
+//        
+//        System.out.print(" Depth First Traversal from: ");
+//        v = scn.nextInt();
+        DFS(v);
     }
     
 }
