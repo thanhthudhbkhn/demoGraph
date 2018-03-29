@@ -13,12 +13,44 @@ import java.io.*;
  */
 
 public class DemoGraph {
+    static List<Integer> list[] = new  LinkedList[5000];
+    public static void BFS(int verteId) {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        boolean visited[] = new boolean[5000];
+ 
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<>();
+ 
+        // Mark the current node as visited and enqueue it
+        visited[verteId]=true;
+        queue.add(verteId);
+ 
+        while (!queue.isEmpty())
+        {
+            // Dequeue a vertex from queue and print it
+            verteId = queue.poll();
+            System.out.print(verteId+" ");
 
+            // Get all adjacent vertices of the dequeued vertex 
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it            
+            int itemCount = list[verteId].size();
+            for (int i = 0; i < itemCount; i++) {
+                int adjacentVerte = list[verteId].get(i);
+                if (visited[adjacentVerte]==false) {
+                    visited[adjacentVerte]=true;
+                    queue.add(adjacentVerte);
+                }
+            }
+        }
+    }
+    
     public static void main(String[] args) throws FileNotFoundException, IOException {
         // TODO code application logic here
         //khoi tao mang chua 10 list
         //moi list la danh sach dinh ke cua dinh co verteId = listId
-        List<Integer> list[] = new  LinkedList[5000];
+        
         for(int i=0; i<5000; i++) {
             list[i] = new LinkedList<>();
         }        
@@ -47,9 +79,14 @@ public class DemoGraph {
         }
         in.close();
         //display the lists to check
-        for (int i = 0; i <=n; i++) {
-            System.out.println(i+" - "+list[i]);
-        }
+//        for (int i = 0; i <=n; i++) {
+//            System.out.println(i+" - "+list[i]);
+//        }
+        
+        System.out.print("Breadth First Traversal from: ");
+        Scanner scn = new Scanner(System.in);
+        int v = scn.nextInt();
+        BFS(v);
     }
     
 }
