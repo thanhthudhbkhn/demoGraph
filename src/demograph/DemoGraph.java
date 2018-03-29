@@ -109,11 +109,14 @@ public class DemoGraph {
         System.out.print("Breadth First Traversal from: ");
         Scanner scn = new Scanner(System.in);
         int v = scn.nextInt();
-//        BFS(v);
-//        
-//        System.out.print(" Depth First Traversal from: ");
-//        v = scn.nextInt();
+        BFS(v);
+        
+        System.out.println("");
+        System.out.print("Depth First Traversal from: ");
+        v = scn.nextInt();
         DFS(v);
+        System.out.println("");
+
     }
     
 }
