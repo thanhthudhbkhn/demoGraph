@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         DemoGraph g = new DemoGraph();
         g.createGraph();
+        //g.displayGraph();
         System.out.print("Breadth First Traversal from: ");
         Scanner scn = new Scanner(System.in);
         int v = scn.nextInt();
