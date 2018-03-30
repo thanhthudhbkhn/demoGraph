@@ -14,7 +14,7 @@ import java.io.*;
 
 public class DemoGraph {
     static List<Integer> list[] = new  LinkedList[5000];
-    public static void BFS(int verteId) {
+    public void BFS(int verteId) {
         // Mark all the vertices as not visited(By default
         // set as false)
         boolean visited[] = new boolean[5000];
@@ -46,7 +46,7 @@ public class DemoGraph {
         }
     }
     
-    public static void DFSFunction(int verteId, boolean visited[]) {
+    public void DFSFunction(int verteId, boolean visited[]) {
         // Mark the current node as visited and enqueue it
         visited[verteId]=true; 
         System.out.print(verteId+" ");
@@ -62,15 +62,14 @@ public class DemoGraph {
         }
     }
     
-    public static void DFS(int verteId) {
+    public void DFS(int verteId) {
         // Mark all the vertices as not visited(By default
         // set as false)
         boolean visited[] = new boolean[5000];
         DFSFunction(verteId, visited);        
     }
     
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        // TODO code application logic here
+    public List<Integer>[] createGraph() throws FileNotFoundException, IOException {
         //khoi tao mang chua 10 list
         //moi list la danh sach dinh ke cua dinh co verteId = listId
         
@@ -101,22 +100,7 @@ public class DemoGraph {
             currentLine = in.readLine();
         }
         in.close();
-        //display the lists to check
-//        for (int i = 0; i <=n; i++) {
-//            System.out.println(i+" - "+list[i]);
-//        }
-        
-        System.out.print("Breadth First Traversal from: ");
-        Scanner scn = new Scanner(System.in);
-        int v = scn.nextInt();
-        BFS(v);
-        
-        System.out.println("");
-        System.out.print("Depth First Traversal from: ");
-        v = scn.nextInt();
-        DFS(v);
-        System.out.println("");
-
+        return list;
     }
     
 }
