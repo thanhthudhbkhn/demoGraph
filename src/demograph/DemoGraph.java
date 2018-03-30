@@ -14,7 +14,10 @@ import java.io.*;
 
 public class DemoGraph {
     static List<Integer> list[] = new  LinkedList[5000];
-    public static void BFS(int verteId) {
+    int m = 0; //so edge cua graph
+    int n = 0; //verteId max cua graph
+    
+    public void BFS(int verteId) {
         // Mark all the vertices as not visited(By default
         // set as false)
         boolean visited[] = new boolean[5000];
@@ -46,8 +49,37 @@ public class DemoGraph {
         }
     }
     
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        // TODO code application logic here
+    public void DFSFunction(int verteId, boolean visited[]) {
+        // Mark the current node as visited and enqueue it
+        visited[verteId]=true; 
+        System.out.print(verteId+" ");
+
+        // Get all adjacent vertices of the vertex 
+        // If a adjacent has not been visited, visit it with DFS
+        int itemCount = list[verteId].size();
+        for (int i = 0; i < itemCount; i++) {
+            int adjacentVerte = list[verteId].get(i);
+            if (visited[adjacentVerte]==false) {
+                DFSFunction(adjacentVerte,visited);
+            }
+        }
+    }
+    
+    public void DFS(int verteId) {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        boolean visited[] = new boolean[5000];
+        DFSFunction(verteId, visited);        
+    }
+    
+    
+    public void displayGraph(){
+        for (int i = 0; i <=n; i++) {
+            System.out.println(i+" - "+list[i]);
+        }
+    }
+    
+    public List<Integer>[] createGraph() throws FileNotFoundException, IOException {
         //khoi tao mang chua 10 list
         //moi list la danh sach dinh ke cua dinh co verteId = listId
         
@@ -56,11 +88,9 @@ public class DemoGraph {
         }        
         //khai bao path de thao tac voi file
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-//        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
-        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
+        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
+//        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
         
-        int m = 0; //so edge cua graph
-        int n = 0; //verteId max cua graph
         String currentLine = in.readLine(); //currentLine doc tu file, co dang "v1 v2"
         while(currentLine != null){
             m++;            
@@ -70,7 +100,8 @@ public class DemoGraph {
                 int v1 = Integer.parseInt(vertes[0]);
                 int v2 = Integer.parseInt(vertes[1]);
                 //get max verteId
-                n = (v1>v2)? v1:v2;
+                n = (n>v1)? n:v1;
+                n = (n>v2)? n:v2;
                 //add 2 vertes into lists
                 list[v1].add(v2);
                 list[v2].add(v1);
@@ -78,15 +109,7 @@ public class DemoGraph {
             currentLine = in.readLine();
         }
         in.close();
-        //display the lists to check
-//        for (int i = 0; i <=n; i++) {
-//            System.out.println(i+" - "+list[i]);
-//        }
-        
-        System.out.print("Breadth First Traversal from: ");
-        Scanner scn = new Scanner(System.in);
-        int v = scn.nextInt();
-        BFS(v);
+        return list;
     }
     
 }
