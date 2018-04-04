@@ -40,10 +40,10 @@ public class DemoGraph {
             // visited and enqueue it            
             int itemCount = list[vertexId].size();
             for (int i = 0; i < itemCount; i++) {
-                int adjacentVerte = list[vertexxId].get(i);
-                if (visited[adjacentVerte]==false) {
-                    visited[adjacentVerte]=true;
-                    queue.add(adjacentVerte);
+                int adjacentVertex = list[vertexId].get(i);
+                if (visited[adjacentVertex]==false) {
+                    visited[adjacentVertex]=true;
+                    queue.add(adjacentVertex);
                 }
             }
         }
@@ -58,9 +58,9 @@ public class DemoGraph {
         // If a adjacent has not been visited, visit it with DFS
         int itemCount = list[vertexId].size();
         for (int i = 0; i < itemCount; i++) {
-            int adjacentVerte = list[vertexId].get(i);
-            if (visited[adjacentVerte]==false) {
-                DFSFunction(adjacentVerte,visited);
+            int adjacentVertex = list[vertexId].get(i);
+            if (visited[adjacentVertex]==false) {
+                DFSFunction(adjacentVertex,visited);
             }
         }
     }
@@ -112,4 +112,41 @@ public class DemoGraph {
         return list;
     }
     
+    public boolean findPath (int vertex1, int vertex2) {
+        //if 2 vertices are the same, return true
+        if (vertex1 == vertex2 && vertex1<=n) return true;
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        boolean visited[] = new boolean[5000];
+        
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<>();
+ 
+        // Mark the current node as visited and enqueue it
+        visited[vertex1]=true;
+        queue.add(vertex1);
+ 
+        while (!queue.isEmpty())
+        {
+            // Dequeue a vertex from queue and print it
+            vertex1 = queue.poll();
+            //System.out.print(vertex1+" ");
+
+            // Get all adjacent vertices of the dequeued vertex 
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it            
+            int itemCount = list[vertex1].size();
+            for (int i = 0; i < itemCount; i++) {
+                int adjacentVertex = list[vertex1].get(i);
+                if (visited[adjacentVertex]==false) {
+                    visited[adjacentVertex]=true;
+                    //If this vertex is the destination return true
+                    if (adjacentVertex == vertex2) return true;
+                    //Else continue BFS
+                    queue.add(adjacentVertex);
+                }
+            }
+        }
+        return false;
+    }
 }

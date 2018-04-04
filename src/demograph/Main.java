@@ -17,15 +17,20 @@ public class Main {
         DemoGraph g = new DemoGraph();
         g.createGraph();
         //g.displayGraph();
-        System.out.print("Breadth First Traversal from: ");
+        System.out.println("Enter 2 vertices: ");
         Scanner scn = new Scanner(System.in);
-        int v = scn.nextInt();
-        g.BFS(v);
+        int v1 = scn.nextInt();
+        int v2 = scn.nextInt();
+        System.out.println(g.findPath(v1,v2));
         
-        System.out.println("");
-        System.out.print("Depth First Traversal from: ");
-        v = scn.nextInt();
-        g.DFS(v);
-        System.out.println("");
+//        System.out.print("Breadth First Traversal from: ");
+//        int v = scn.nextInt();
+//        g.BFS(v);
+//        
+//        System.out.println("");
+//        System.out.print("Depth First Traversal from: ");
+//        v = scn.nextInt();
+//        g.DFS(v);
+//        System.out.println("");
     }
 }
