@@ -112,19 +112,31 @@ public class DemoGraph {
         return list;
     }
     
+    public void displayPath(int path[],int vertex1, int vertex2) {
+//        int destination = vertex2;
+        System.out.print(vertex2);
+        do {
+            int step = path[vertex2];
+            vertex2 = step;
+            System.out.print("<-"+vertex2);
+        } while (vertex2!=vertex1);
+    }
+    
     public boolean findPath (int vertex1, int vertex2) {
         //if 2 vertices are the same, return true
         if (vertex1 == vertex2 && vertex1<=n) return true;
+        int start = vertex1;
         // Mark all the vertices as not visited(By default
         // set as false)
         boolean visited[] = new boolean[5000];
-        
+        int path[] = new int[5000];
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<>();
  
         // Mark the current node as visited and enqueue it
         visited[vertex1]=true;
         queue.add(vertex1);
+//        path[0]=vertex1;
  
         while (!queue.isEmpty())
         {
@@ -141,9 +153,15 @@ public class DemoGraph {
                 if (visited[adjacentVertex]==false) {
                     visited[adjacentVertex]=true;
                     //If this vertex is the destination return true
-                    if (adjacentVertex == vertex2) return true;
+                    if (adjacentVertex == vertex2) {
+                        path[adjacentVertex] = vertex1;
+                        displayPath(path,start,vertex2);
+                        return true;
+                    }
                     //Else continue BFS
                     queue.add(adjacentVertex);
+                    path[adjacentVertex] = vertex1;
+//                    System.out.print(adjacentVertex+"->");
                 }
             }
         }
