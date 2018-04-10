@@ -90,7 +90,12 @@ public class Graph {
         result[1] = Integer.parseInt(vertices[1]);
         return result;
     }
-
+    
+    public Vertex getVertex(int vertexId) {
+        Vertex v = ds_dinh.get(indexOf(vertexId));
+        return v;
+    }
+    
     public boolean CointainVertex(int vertexId) {
         for (int i = 0; i < ds_dinh.size(); i++) {
             if (ds_dinh.get(i).getVertexId() == vertexId) {
@@ -111,7 +116,7 @@ public class Graph {
                 v.adjacencyList.add(v2);
                 addVertex(v);
             } else {
-                Vertex v = ds_dinh.get(indexOf(v1));
+                Vertex v = getVertex(v1);
                 v.adjacencyList.add(v2);
             }
         } else if ("undirected".equals(type)) {
@@ -134,7 +139,8 @@ public class Graph {
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
 //        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
         try (BufferedReader in = new BufferedReader(new FileReader(path + "/demograph/data.txt"))) {
-            //try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
+//        try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
+//        try (BufferedReader in = new BufferedReader(new FileReader(path+"/twitter_combined.txt"))) {
             String currentLine = in.readLine(); //currentLine doc tu file, co dang "v1 v2"
             while (currentLine != null) {
                 m++;
