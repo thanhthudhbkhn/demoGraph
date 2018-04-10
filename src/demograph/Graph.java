@@ -18,37 +18,35 @@ public class Graph {
     int m = 0; //so edge cua graph
     int n = 0; //vertexId max cua graph
 
-//    public void BFS(int vertexId) {
-//        // Mark all the vertices as not visited(By default
-//        // set as false)
-//        boolean visited[] = new boolean[5000];
-// 
-//        // Create a queue for BFS
-//        LinkedList<Integer> queue = new LinkedList<>();
-// 
-//        // Mark the current node as visited and enqueue it
-//        visited[vertexId]=true;
-//        queue.add(vertexId);
-// 
-//        while (!queue.isEmpty())
-//        {
-//            // Dequeue a vertex from queue and print it
-//            vertexId = queue.poll();
-//            System.out.print(vertexId+" ");
-//
-//            // Get all adjacent vertices of the dequeued vertex 
-//            // If a adjacent has not been visited, then mark it
-//            // visited and enqueue it            
-//            int itemCount = list[vertexId].size();
-//            for (int i = 0; i < itemCount; i++) {
-//                int adjacentVertex = list[vertexId].get(i);
-//                if (visited[adjacentVertex]==false) {
-//                    visited[adjacentVertex]=true;
-//                    queue.add(adjacentVertex);
-//                }
-//            }
-//        }
-//    }
+    public void BFS(int vertexId) {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        ArrayList <Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(),false));
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        // Mark the current node as visited and enqueue it
+        visited.set(vertexId,true);
+        queue.add(vertexId);
+
+        while (!queue.isEmpty()) {
+            // Dequeue a vertex from queue and print it
+            vertexId = queue.poll();
+            System.out.print(vertexId + " ");
+
+            // Get all adjacent vertices of the dequeued vertex 
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it    
+            Vertex vertex = getVertex(vertexId);
+            for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+                int adjacentVertex = vertex.adjacencyList.get(i);
+                if (visited.get(adjacentVertex) == false) {
+                    visited.set(adjacentVertex, true);
+                    queue.add(adjacentVertex);
+                }
+            }
+        }
+    }
 //    public void DFSFunction(int vertexId, boolean visited[]) {
 //        // Mark the current node as visited and enqueue it
 //        visited[vertexId]=true; 
@@ -71,6 +69,7 @@ public class Graph {
 //        boolean visited[] = new boolean[5000];
 //        DFSFunction(vertexId, visited);        
 //    }
+
     public Graph() {
 
     }
@@ -90,12 +89,12 @@ public class Graph {
         result[1] = Integer.parseInt(vertices[1]);
         return result;
     }
-    
+
     public Vertex getVertex(int vertexId) {
         Vertex v = ds_dinh.get(indexOf(vertexId));
         return v;
     }
-    
+
     public boolean CointainVertex(int vertexId) {
         for (int i = 0; i < ds_dinh.size(); i++) {
             if (ds_dinh.get(i).getVertexId() == vertexId) {

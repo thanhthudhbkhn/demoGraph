@@ -18,14 +18,14 @@ public class Main {
         g.createGraph();
         g.displayGraph();
 //        System.out.println("Enter 2 vertices: ");
-//        Scanner scn = new Scanner(System.in);
+        Scanner scn = new Scanner(System.in);
 //        int v1 = scn.nextInt();
 //        int v2 = scn.nextInt();
 //        g.findPath(v1,v2);
         
-//        System.out.print("Breadth First Traversal from: ");
-//        int v = scn.nextInt();
-//        g.BFS(v);
+        System.out.print("Breadth First Traversal from: ");
+        int v = scn.nextInt();
+        g.BFS(v);
 //        
 //        System.out.println("");
 //        System.out.print("Depth First Traversal from: ");
