@@ -21,12 +21,12 @@ public class Graph {
     public void BFS(int vertexId) {
         // Mark all the vertices as not visited(By default
         // set as false)
-        ArrayList <Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(),false));
+        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<>();
 
         // Mark the current node as visited and enqueue it
-        visited.set(vertexId,true);
+        visited.set(vertexId, true);
         queue.add(vertexId);
 
         while (!queue.isEmpty()) {
@@ -47,28 +47,29 @@ public class Graph {
             }
         }
     }
-//    public void DFSFunction(int vertexId, boolean visited[]) {
-//        // Mark the current node as visited and enqueue it
-//        visited[vertexId]=true; 
-//        System.out.print(vertexId+" ");
-//
-//        // Get all adjacent vertices of the vertex 
-//        // If a adjacent has not been visited, visit it with DFS
-//        int itemCount = list[vertexId].size();
-//        for (int i = 0; i < itemCount; i++) {
-//            int adjacentVertex = list[vertexId].get(i);
-//            if (visited[adjacentVertex]==false) {
-//                DFSFunction(adjacentVertex,visited);
-//            }
-//        }
-//    }
-//    
-//    public void DFS(int vertexId) {
-//        // Mark all the vertices as not visited(By default
-//        // set as false)
-//        boolean visited[] = new boolean[5000];
-//        DFSFunction(vertexId, visited);        
-//    }
+
+    public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
+        // Mark the current node as visited and enqueue it
+        visited.set(vertexId, true);
+        System.out.print(vertexId + " ");
+
+        // Get all adjacent vertices of the vertex 
+        // If a adjacent has not been visited, visit it with DFS
+        Vertex vertex = getVertex(vertexId);
+        for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+            int adjacentVertex = vertex.adjacencyList.get(i);
+            if (visited.get(adjacentVertex) == false) {
+                DFSFunction(adjacentVertex, visited);
+            }
+        }
+    }
+
+    public void DFS(int vertexId) {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
+        DFSFunction(vertexId, visited);
+    }
 
     public Graph() {
 

@@ -26,11 +26,11 @@ public class Main {
         System.out.print("Breadth First Traversal from: ");
         int v = scn.nextInt();
         g.BFS(v);
-//        
-//        System.out.println("");
-//        System.out.print("Depth First Traversal from: ");
-//        v = scn.nextInt();
-//        g.DFS(v);
-//        System.out.println("");
+        
+        System.out.println("");
+        System.out.print("Depth First Traversal from: ");
+        v = scn.nextInt();
+        g.DFS(v);
+        System.out.println("");
     }
 }
