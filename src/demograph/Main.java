@@ -16,12 +16,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         DemoGraph g = new DemoGraph();
         g.createGraph();
-//        g.displayGraph();
-        System.out.println("Enter 2 vertices: ");
-        Scanner scn = new Scanner(System.in);
-        int v1 = scn.nextInt();
-        int v2 = scn.nextInt();
-        g.findPath(v1,v2);
+        g.displayGraph();
+//        System.out.println("Enter 2 vertices: ");
+//        Scanner scn = new Scanner(System.in);
+//        int v1 = scn.nextInt();
+//        int v2 = scn.nextInt();
+//        g.findPath(v1,v2);
         
 //        System.out.print("Breadth First Traversal from: ");
 //        int v = scn.nextInt();
