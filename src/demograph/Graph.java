@@ -11,13 +11,9 @@ import java.io.*;
  *
  * @author ThuPT
  */
-class Vertex {
-    int vertexId;
-    List<Integer> list = new  LinkedList();
-}
-public class DemoGraph {
+
+public class Graph {
     ArrayList<Vertex> ds_dinh = new ArrayList<>();
-//    static List<Integer> list[] = new  LinkedList[5000];
     int m = 0; //so edge cua graph
     int n = 0; //vertexId max cua graph
     
@@ -75,58 +71,83 @@ public class DemoGraph {
 //        boolean visited[] = new boolean[5000];
 //        DFSFunction(vertexId, visited);        
 //    }
-    
-    
+
+    public Graph() {
+        
+    }
+        
     public void displayGraph(){
         for (int i = 0; i < ds_dinh.size(); i++) {
             Vertex v = ds_dinh.get(i);
-            System.out.println(v.vertexId + " " + v.list);
+            System.out.println(v.vertexId + " " + v.adjacencyList);
         }
     }
-        
+    
+    public int[] getVerticesFromString(String str){
+        //get 2 vertexs from an line "v1 v2"
+        int[] result = new int[2];        
+        String[] vertices = str.split(" ");
+        result[0] = Integer.parseInt(vertices[0]);
+        result[1] = Integer.parseInt(vertices[1]);
+        return result;
+    }
+    
+    public boolean CointainVertex(int vertexId) {
+        for (int i = 0; i < ds_dinh.size(); i++) {
+            if (ds_dinh.get(i).getVertexId() == vertexId) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void addVertex(Vertex vertex){
+        ds_dinh.add(vertex);
+    }
+    
+    public void addEdge(String type, int v1, int v2) {
+        if ("directed".equals(type)){
+            if (CointainVertex(v1) == false) {
+                Vertex v = new Vertex(v1);
+                v.adjacencyList.add(v2);
+                addVertex(v);
+            } else {
+                Vertex v = ds_dinh.get(v1);
+                v.adjacencyList.add(v2);
+            }
+        } else if ("undirected".equals(type)) {
+            addEdge("directed", v1, v2);
+            addEdge("directed", v2, v1);
+        }
+    }
+    
+    public int indexOf(int vertexId){
+        for (int i = 0; i < ds_dinh.size(); i++) {
+            if (vertexId == ds_dinh.get(i).getVertexId()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public ArrayList createGraph() throws FileNotFoundException, IOException {
-        //khoi tao mang chua 10 list
-        //moi list la danh sach dinh ke cua dinh co vertexId = listId
-//        
-//        for(int i=0; i<5000; i++) {
-//            list[i] = new LinkedList<>();
-//        }        
         //khai bao path de thao tac voi file
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-        BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"));
 //        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
-        
-        String currentLine = in.readLine(); //currentLine doc tu file, co dang "v1 v2"
-        while(currentLine != null){
-            m++;            
-            if (!"".equals(currentLine)) {
-                //get 2 vertexs from an edge
-                String[] vertices = currentLine.split(" ");
-                int v1 = Integer.parseInt(vertices[0]);
-                int v2 = Integer.parseInt(vertices[1]);
-                //get max vertexId
-                n = (n>v1)? n:v1;
-                n = (n>v2)? n:v2;
-                //add 2 vertices into lists
-                boolean existed = false;
-                for (int i = 0; i < ds_dinh.size(); i++) {
-                    Vertex v = ds_dinh.get(i);
-                    if (v.vertexId == v1) {
-                        existed = true;
-                        v.list.add(v2);
-                        break;
-                    }
+        try (BufferedReader in = new BufferedReader(new FileReader(path+"/demograph/data.txt"))) {
+            //try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
+            String currentLine = in.readLine(); //currentLine doc tu file, co dang "v1 v2"
+            while(currentLine != null){
+                m++;
+                if (!"".equals(currentLine)) {
+                    int vertex1 = getVerticesFromString(currentLine)[0];
+                    int vertex2 = getVerticesFromString(currentLine)[1];
+                    //add 2 vertices into lists
+                    addEdge("undirected",vertex1, vertex2);
                 }
-                if (existed == false) {
-                    Vertex ve1 = new Vertex();
-                    ve1.vertexId = v1;
-                    ve1.list.add(v2);
-                    ds_dinh.add(ve1);
-                }
+                currentLine = in.readLine();
             }
-            currentLine = in.readLine();
-        }
-        in.close();
+        } //currentLine doc tu file, co dang "v1 v2"
         return ds_dinh;
     }
     

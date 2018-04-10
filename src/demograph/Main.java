@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        DemoGraph g = new DemoGraph();
+        Graph g = new Graph();
         g.createGraph();
         g.displayGraph();
 //        System.out.println("Enter 2 vertices: ");
