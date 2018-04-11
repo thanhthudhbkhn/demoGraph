@@ -25,12 +25,12 @@ public class Main {
         
         System.out.print("Breadth First Traversal from: ");
         int v = scn.nextInt();
-        g.BFS(v);
-        
+        if(g.BFS(v)==false) System.out.println("Breadth First Traversal failed.");
         System.out.println("");
+        
         System.out.print("Depth First Traversal from: ");
         v = scn.nextInt();
-        g.DFS(v);
+        if(g.DFS(v)==false) System.out.println("Breadth First Traversal failed.");
         System.out.println("");
     }
 }

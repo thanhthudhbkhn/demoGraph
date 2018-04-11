@@ -16,9 +16,13 @@ public class Graph {
 
     ArrayList<Vertex> ds_dinh = new ArrayList<>();
 
-    public void BFS(int vertexId) {
+    //return true if BFS is successful
+    public boolean BFS(int vertexId) {
         // Mark all the vertices as not visited(By default
         // set as false)
+        if (containVertex(vertexId) == false) {
+            return false;
+        }
         ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<>();
@@ -44,6 +48,7 @@ public class Graph {
                 }
             }
         }
+        return true;
     }
 
     public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
@@ -62,11 +67,15 @@ public class Graph {
         }
     }
 
-    public void DFS(int vertexId) {
+    public boolean DFS(int vertexId) {
+        if (containVertex(vertexId) == false) {
+            return false;
+        }
         // Mark all the vertices as not visited(By default
         // set as false)
         ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
         DFSFunction(vertexId, visited);
+        return true;
     }
 
     public void displayGraph() {
@@ -93,7 +102,7 @@ public class Graph {
     }
 
     //return true if the list contain the vertex
-    public boolean ContainVertex(int vertexId) {
+    public boolean containVertex(int vertexId) {
         for (int i = 0; i < ds_dinh.size(); i++) {
             if (ds_dinh.get(i).getVertexId() == vertexId) {
                 return true;
@@ -109,7 +118,7 @@ public class Graph {
     public void addEdge(String type, int v1, int v2) {
         if ("directed".equals(type)) {
             //if there are not vertex v1, create new vertex before add edge
-            if (ContainVertex(v1) == false) {
+            if (containVertex(v1) == false) {
                 Vertex v = new Vertex(v1);
                 v.adjacencyList.add(v2);
                 addVertex(v);
@@ -136,7 +145,7 @@ public class Graph {
     public ArrayList createGraph() throws FileNotFoundException, IOException {
         //define path for open file with shorter address
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-        try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(path + "/demograph/data.txt"))) {
             String currentLine = in.readLine(); //currentLine has format: "v1 v2"
             while (currentLine != null) {
                 if (!"".equals(currentLine)) {
