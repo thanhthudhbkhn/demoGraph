@@ -15,8 +15,6 @@ import java.io.*;
 public class Graph {
 
     ArrayList<Vertex> ds_dinh = new ArrayList<>();
-    int m = 0; //so edge cua graph
-    int n = 0; //vertexId max cua graph
 
     public void BFS(int vertexId) {
         // Mark all the vertices as not visited(By default
@@ -26,7 +24,7 @@ public class Graph {
         LinkedList<Integer> queue = new LinkedList<>();
 
         // Mark the current node as visited and enqueue it
-        visited.set(vertexId, true);
+        visited.set(indexOf(vertexId), true);
         queue.add(vertexId);
 
         while (!queue.isEmpty()) {
@@ -35,13 +33,13 @@ public class Graph {
             System.out.print(vertexId + " ");
 
             // Get all adjacent vertices of the dequeued vertex 
-            // If a adjacent has not been visited, then mark it
-            // visited and enqueue it    
             Vertex vertex = getVertex(vertexId);
             for (int i = 0; i < vertex.adjacencyList.size(); i++) {
                 int adjacentVertex = vertex.adjacencyList.get(i);
-                if (visited.get(adjacentVertex) == false) {
-                    visited.set(adjacentVertex, true);
+                // If a adjacent has not been visited, then mark it
+                // visited and enqueue it    
+                if (visited.get(indexOf(adjacentVertex)) == false) {
+                    visited.set(indexOf(adjacentVertex), true);
                     queue.add(adjacentVertex);
                 }
             }
@@ -50,15 +48,15 @@ public class Graph {
 
     public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
         // Mark the current node as visited and enqueue it
-        visited.set(vertexId, true);
+        visited.set(indexOf(vertexId), true);
         System.out.print(vertexId + " ");
 
         // Get all adjacent vertices of the vertex 
-        // If a adjacent has not been visited, visit it with DFS
         Vertex vertex = getVertex(vertexId);
         for (int i = 0; i < vertex.adjacencyList.size(); i++) {
             int adjacentVertex = vertex.adjacencyList.get(i);
-            if (visited.get(adjacentVertex) == false) {
+            // If a adjacent has not been visited, visit it with DFS
+            if (visited.get(indexOf(adjacentVertex)) == false) {
                 DFSFunction(adjacentVertex, visited);
             }
         }
@@ -71,10 +69,6 @@ public class Graph {
         DFSFunction(vertexId, visited);
     }
 
-    public Graph() {
-
-    }
-
     public void displayGraph() {
         for (int i = 0; i < ds_dinh.size(); i++) {
             Vertex v = ds_dinh.get(i);
@@ -85,7 +79,9 @@ public class Graph {
     public int[] getVerticesFromString(String str) {
         //get 2 vertexs from an line "v1 v2"
         int[] result = new int[2];
+        //String[] vertices = {v1,v2}
         String[] vertices = str.split(" ");
+        //Convert from string into integer
         result[0] = Integer.parseInt(vertices[0]);
         result[1] = Integer.parseInt(vertices[1]);
         return result;
@@ -96,7 +92,8 @@ public class Graph {
         return v;
     }
 
-    public boolean CointainVertex(int vertexId) {
+    //return true if the list contain the vertex
+    public boolean ContainVertex(int vertexId) {
         for (int i = 0; i < ds_dinh.size(); i++) {
             if (ds_dinh.get(i).getVertexId() == vertexId) {
                 return true;
@@ -111,11 +108,13 @@ public class Graph {
 
     public void addEdge(String type, int v1, int v2) {
         if ("directed".equals(type)) {
-            if (CointainVertex(v1) == false) {
+            //if there are not vertex v1, create new vertex before add edge
+            if (ContainVertex(v1) == false) {
                 Vertex v = new Vertex(v1);
                 v.adjacencyList.add(v2);
                 addVertex(v);
             } else {
+                //if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
                 Vertex v = getVertex(v1);
                 v.adjacencyList.add(v2);
             }
@@ -135,15 +134,11 @@ public class Graph {
     }
 
     public ArrayList createGraph() throws FileNotFoundException, IOException {
-        //khai bao path de thao tac voi file
+        //define path for open file with shorter address
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-//        BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"));
-        try (BufferedReader in = new BufferedReader(new FileReader(path + "/demograph/data.txt"))) {
-//        try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
-//        try (BufferedReader in = new BufferedReader(new FileReader(path+"/twitter_combined.txt"))) {
-            String currentLine = in.readLine(); //currentLine doc tu file, co dang "v1 v2"
+        try (BufferedReader in = new BufferedReader(new FileReader(path+"/facebook/facebook_combined.txt"))) {
+            String currentLine = in.readLine(); //currentLine has format: "v1 v2"
             while (currentLine != null) {
-                m++;
                 if (!"".equals(currentLine)) {
                     int vertex1 = getVerticesFromString(currentLine)[0];
                     int vertex2 = getVerticesFromString(currentLine)[1];
