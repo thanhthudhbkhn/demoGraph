@@ -126,6 +126,10 @@ public class Graph {
                 //if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
                 Vertex v = getVertex(v1);
                 v.adjacencyList.add(v2);
+                if (containVertex(v2) == false) {
+                    v = new Vertex(v2);
+                    addVertex(v);
+                }
             }
         } else if ("undirected".equals(type)) {
             addEdge("directed", v1, v2);
@@ -133,6 +137,7 @@ public class Graph {
         }
     }
 
+    //return the index of the vertex in the list
     public int indexOf(int vertexId) {
         for (int i = 0; i < ds_dinh.size(); i++) {
             if (vertexId == ds_dinh.get(i).getVertexId()) {
@@ -145,7 +150,7 @@ public class Graph {
     public ArrayList createGraph() throws FileNotFoundException, IOException {
         //define path for open file with shorter address
         String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
-        try (BufferedReader in = new BufferedReader(new FileReader(path + "/demograph/data.txt"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
             String currentLine = in.readLine(); //currentLine has format: "v1 v2"
             while (currentLine != null) {
                 if (!"".equals(currentLine)) {
@@ -173,6 +178,7 @@ public class Graph {
     public boolean findPath(int vertex1, int vertex2) {
         //if vertex1 or vertex2 are not existed in graph, return false
         if (containVertex(vertex1) == false || containVertex(vertex2) == false) {
+            System.out.println("The vertex does not exist.");
             return false;
         }
         // else if 2 vertices are the same, return true
@@ -184,19 +190,17 @@ public class Graph {
         // Mark all the vertices as not visited(By default
         // set as false)
         ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
-        int[] path = new int[5000];
+        int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<>();
 
         // Mark the current node as visited and enqueue it
         visited.set(indexOf(vertex1), true);
         queue.add(vertex1);
-//        path[0]=vertex1;
 
         while (!queue.isEmpty()) {
             // Dequeue a vertex from queue and print it
             vertex1 = queue.poll();
-            //System.out.print(vertex1+" ");
 
             // Get all adjacent vertices of the dequeued vertex 
             // If a adjacent has not been visited, then mark it
