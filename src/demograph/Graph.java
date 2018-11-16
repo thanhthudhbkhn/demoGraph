@@ -15,6 +15,7 @@ import java.io.*;
 public class Graph {
 
     ArrayList<Vertex> ds_dinh = new ArrayList<>();
+    int so_canh = 0;
 
     //return true if BFS is successful
     public boolean BFS(int vertexId) {
@@ -84,6 +85,13 @@ public class Graph {
             System.out.println(v.vertexId + " " + v.adjacencyList);
         }
     }
+    
+    public void displayGraphInfo() {
+        System.out.println("There are:");
+        System.out.println(ds_dinh.size()+" vertices");
+        System.out.println("and "+so_canh+" edges");
+        System.out.println("in this graph.");
+    }
 
     public int[] getVerticesFromString(String str) {
         //get 2 vertexs from an line "v1 v2"
@@ -149,7 +157,7 @@ public class Graph {
 
     public ArrayList createGraph() throws FileNotFoundException, IOException {
         //define path for open file with shorter address
-        String path = "/home/thanhthu/NetBeansProjects/demoGraph/src";
+        String path = "D:/gradute/demoGraph/src";
         try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
             String currentLine = in.readLine(); //currentLine has format: "v1 v2"
             while (currentLine != null) {
@@ -158,6 +166,7 @@ public class Graph {
                     int vertex2 = getVerticesFromString(currentLine)[1];
                     //add 2 vertices into lists
                     addEdge("undirected", vertex1, vertex2);
+                    so_canh++;
                 }
                 currentLine = in.readLine();
             }
