@@ -35,7 +35,7 @@ public class Graph {
         while (!queue.isEmpty()) {
             // Dequeue a vertex from queue and print it
             vertexId = queue.poll();
-            System.out.print(vertexId + " ");
+//            System.out.print(vertexId + " ");
 
             // Get all adjacent vertices of the dequeued vertex 
             Vertex vertex = getVertex(vertexId);
@@ -55,7 +55,7 @@ public class Graph {
     public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
         // Mark the current node as visited and enqueue it
         visited.set(indexOf(vertexId), true);
-        System.out.print(vertexId + " ");
+//        System.out.print(vertexId + " ");
 
         // Get all adjacent vertices of the vertex 
         Vertex vertex = getVertex(vertexId);

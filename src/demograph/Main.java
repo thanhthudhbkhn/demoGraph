@@ -38,26 +38,40 @@ public class Main {
                     System.out.println("Enter 2 vertices: ");
                     int v1 = scn.nextInt();
                     int v2 = scn.nextInt();
+                    long start = System.nanoTime();
                     if (g.findPath(v1, v2) == false) {
                         System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
                     }
+                    float runTime = (System.nanoTime() - start)/1000000f;
                     System.out.println("");
+                    System.out.println("It takes "+runTime+"ms to find path.");
                     break;
                 case 3:
-                    System.out.print("Breadth First Traversal from: ");
-                    int v = scn.nextInt();
-                    if (g.BFS(v) == false) {
-                        System.out.println("Breadth First Traversal failed with vertex ."+v);
+                    int v=0;
+                    start = System.nanoTime();
+                    for (int i = 0; i < g.ds_dinh.size(); i++) {
+                        v = g.ds_dinh.get(i).vertexId;
+                        if (g.BFS(v) == false) {
+                            System.out.println("Breadth First Traversal failed with vertex ."+v);
+                        }
+//                        System.out.println("");
                     }
-                    System.out.println("");
+                    runTime = (System.nanoTime() - start)/1000000f;
+//                    System.out.println("");
+                    System.out.println("It takes "+runTime+"ms to run BFS.");
                     break;
-                case 4:                    
-                    System.out.print("Depth First Traversal from: ");
-                    v = scn.nextInt();
-                    if (g.DFS(v) == false) {
-                        System.out.println("Breadth First Traversal failed.");
+                case 4:
+                    start = System.nanoTime();
+                    for (int i = 0; i < g.ds_dinh.size(); i++) {
+                        v = g.ds_dinh.get(i).vertexId;
+                        if (g.DFS(v) == false) {
+                            System.out.println("Deepth First Traversal failed.");
+                        }
+                        System.out.println("");
                     }
-                    System.out.println("");
+                    runTime = (System.nanoTime() - start)/1000000f;
+//                    System.out.println("");
+                    System.out.println("It takes "+runTime+"ms to run DFS.");
                     break;
                 default:break;
             }
