@@ -5,26 +5,22 @@
  */
 package demograph;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
- * @author thanhthu
+ * @author Computer
  */
 public class Vertex {
-    int vertexId;
+
+	int vertexId, height;
     List<Integer> adjacencyList = new LinkedList();
+	Vertex left;
+	Vertex right;
 
-    public Vertex(int vertexId) {
-        this.vertexId = vertexId;
-    }
-
-    public int getVertexId() {
-        return vertexId;
-    }
-
-    public List<Integer> getAdjacencyList() {
-        return adjacencyList;
-    }
-    
+	Vertex(int d) {
+		vertexId = d;
+		height = 1;
+	}
 }
