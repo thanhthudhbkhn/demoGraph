@@ -32,7 +32,7 @@ public class Main {
         
             switch(choice){
                 case 1: 
-//                    g.displayGraphInfo();
+                    g.displayGraphInfo();
                     break;
                 case 2:
 //                    System.out.println("Enter 2 vertices: ");

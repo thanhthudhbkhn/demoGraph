@@ -15,6 +15,7 @@ import java.io.*;
 public class Graph {
 
     AVLTree ds_dinh = new AVLTree();
+	int so_dinh = 0;
     int so_canh = 0;
 
 //    //return true if BFS is successful
@@ -79,19 +80,20 @@ public class Graph {
 //        return true;
 //    }
 //
-//    public void displayGraph() {
-//        for (int i = 0; i < ds_dinh.size(); i++) {
-//            Vertex v = ds_dinh.get(i);
-//            System.out.println(v.node.key + " " + v.adjacencyList);
-//        }
-//    }
+    public void displayGraph(Vertex root) {
+        if (root != null) {
+			System.out.println(root.vertexId + " " + root.adjacencyList);
+			displayGraph(root.left);
+			displayGraph(root.right);
+		}
+    }
 //    
-//    public void displayGraphInfo() {
-//        System.out.println("There are:");
-//        System.out.println(ds_dinh.size()+" vertices");
-//        System.out.println("and "+so_canh+" edges");
-//        System.out.println("in this graph.");
-//    }
+    public void displayGraphInfo() {
+        System.out.println("There are:");
+        System.out.println(so_dinh+" vertices");
+        System.out.println("and "+so_canh+" edges");
+        System.out.println("in this graph.");
+    }
 
     public int[] getVerticesFromString(String str) {
         //get 2 vertexs from an line "v1 v2"
@@ -130,14 +132,16 @@ public class Graph {
             if (ds_dinh.getVertex(ds_dinh.root,v1) == null) {
                 Vertex v = new Vertex(v1);
                 v.adjacencyList.add(v2);
-                ds_dinh.root = ds_dinh.insert(ds_dinh.root, v1);
+                ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
+				so_dinh++;
             } else {
                 //if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
                 Vertex v = ds_dinh.getVertex(ds_dinh.root,v1);
                 v.adjacencyList.add(v2);
                 if (ds_dinh.getVertex(ds_dinh.root,v2) == null) {
                     v = new Vertex(v2);
-                    ds_dinh.root = ds_dinh.insert(ds_dinh.root, v2);
+                    ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
+					so_dinh++;
                 }
             }
 			
@@ -157,20 +161,13 @@ public class Graph {
                     int vertex1 = getVerticesFromString(currentLine)[0];
                     int vertex2 = getVerticesFromString(currentLine)[1];
                     //add 2 vertices into lists
-                    so_canh++;
+					addEdge("undirected",vertex1,vertex2);
+					so_canh++;
                 }
                 currentLine = in.readLine();
             }
         } //currentLine doc tu file, co dang "v1 v2"
-		
-                    addEdge("undirected", 10, 20);
-					addEdge("undirected", 10, 30);
-					addEdge("undirected", 10, 40);
-					addEdge("undirected", 10, 50);
-					addEdge("undirected", 20, 25);
-					addEdge("undirected", 20, 30);
-					addEdge("undirected", 20, 40);
-					ds_dinh.preOrder(ds_dinh.root);
+		displayGraph(ds_dinh.root);
         return ds_dinh;
     }
 

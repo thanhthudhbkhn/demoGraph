@@ -68,57 +68,58 @@ public class AVLTree {
 
 		return height(N.left) - height(N.right);
 	}
-
-	Vertex insert(Vertex node, int key) {
+	
+	//add a node to a tree have root
+	Vertex insert(Vertex root, Vertex node) {
 
 		/* 1. Perform the normal BST insertion */
-		if (node == null) {
-			return (new Vertex(key));
-		}
-
-		if (key < node.vertexId) {
-			node.left = insert(node.left, key);
-		} else if (key > node.vertexId) {
-			node.right = insert(node.right, key);
-		} else // Duplicate keys not allowed 
-		{
+		if (root == null) {
 			return node;
 		}
 
-		/* 2. Update height of this ancestor node */
-		node.height = 1 + max(height(node.left),
-				height(node.right));
+		if (node.vertexId < root.vertexId) {
+			root.left = insert(root.left, node);
+		} else if (node.vertexId > root.vertexId) {
+			root.right = insert(root.right, node);
+		} else // Duplicate keys not allowed 
+		{
+			return root;
+		}
+
+		/* 2. Update height of this ancestor root */
+		root.height = 1 + max(height(root.left),
+				height(root.right));
 
 		/* 3. Get the balance factor of this ancestor 
-			node to check whether this node became 
+			root to check whether this root became 
 			unbalanced */
-		int balance = getBalance(node);
+		int balance = getBalance(root);
 
-		// If this node becomes unbalanced, then there 
+		// If this root becomes unbalanced, then there 
 		// are 4 cases Left Left Case 
-		if (balance > 1 && key < node.left.vertexId) {
-			return rightRotate(node);
+		if (balance > 1 && node.vertexId < root.left.vertexId) {
+			return rightRotate(root);
 		}
 
 		// Right Right Case 
-		if (balance < -1 && key > node.right.vertexId) {
-			return leftRotate(node);
+		if (balance < -1 && node.vertexId > root.right.vertexId) {
+			return leftRotate(root);
 		}
 
 		// Left Right Case 
-		if (balance > 1 && key > node.left.vertexId) {
-			node.left = leftRotate(node.left);
-			return rightRotate(node);
+		if (balance > 1 && node.vertexId > root.left.vertexId) {
+			root.left = leftRotate(root.left);
+			return rightRotate(root);
 		}
 
 		// Right Left Case 
-		if (balance < -1 && key < node.right.vertexId) {
-			node.right = rightRotate(node.right);
-			return leftRotate(node);
+		if (balance < -1 && node.vertexId < root.right.vertexId) {
+			root.right = rightRotate(root.right);
+			return leftRotate(root);
 		}
 
-		/* return the (unchanged) node pointer */
-		return node;
+		/* return the (unchanged) root pointer */
+		return root;
 	}
 
 	// A utility function to print preorder traversal of the tree. 
