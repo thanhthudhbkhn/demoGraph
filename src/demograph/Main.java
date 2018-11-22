@@ -14,27 +14,37 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        Graph g = new Graph();
-        g.createGraph();
-        
-        int choice = 0;
-        do {
-            System.out.println("-----------------------------------------");
-            System.out.println("Press 1 to display graph info.");
-            System.out.println("Press 2 find path between 2 vertices.");
-            System.out.println("Press 3 to start Breadth First Traversal.");
-            System.out.println("Press 4 to start Deepth First Traversal.");
-            System.out.println("-----------------------------------------");
-            
-            Scanner scn = new Scanner(System.in);
-            choice = scn.nextInt();
-        
-            switch(choice){
-                case 1: 
-                    g.displayGraphInfo();
-                    break;
-                case 2:
+	static void BFSrun(Graph g, Vertex node) {
+		if (node != null) {
+			if (g.BFS(node.vertexId) == false) {
+				System.out.println("Breadth First Traversal with vertext " + node.vertexId + " failed");
+			}
+			BFSrun(g, node.left);
+			BFSrun(g, node.right);
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		Graph g = new Graph();
+		g.createGraph();
+
+		int choice;
+		do {
+			System.out.println("-----------------------------------------");
+			System.out.println("Press 1 to display graph info.");
+			System.out.println("Press 2 find path between 2 vertices.");
+			System.out.println("Press 3 to start Breadth First Traversal.");
+			System.out.println("Press 4 to start Deepth First Traversal.");
+			System.out.println("-----------------------------------------");
+
+			Scanner scn = new Scanner(System.in);
+			choice = scn.nextInt();
+
+			switch (choice) {
+				case 1:
+					g.displayGraphInfo();
+					break;
+				case 2:
 //                    System.out.println("Enter 2 vertices: ");
 //                    int v1 = scn.nextInt();
 //                    int v2 = scn.nextInt();
@@ -45,22 +55,15 @@ public class Main {
 //                    float runTime = (System.nanoTime() - start)/1000000f;
 //                    System.out.println("");
 //                    System.out.println("It takes "+runTime+"ms to find path.");
-                    break;
-                case 3:
-//                    int v=0;
-//                    start = System.nanoTime();
-//                    for (int i = 0; i < g.ds_dinh.size(); i++) {
-//                        v = g.ds_dinh.get(i).vertexId;
-//                        if (g.BFS(v) == false) {
-//                            System.out.println("Breadth First Traversal failed with vertex ."+v);
-//                        }
-////                        System.out.println("");
-//                    }
-//                    runTime = (System.nanoTime() - start)/1000000f;
-////                    System.out.println("");
-//                    System.out.println("It takes "+runTime+"ms to run BFS.");
-                    break;
-                case 4:
+					break;
+				case 3:
+					int v = 0;
+					long start = System.nanoTime();
+					BFSrun(g, g.ds_dinh.root);
+					float runTime = (System.nanoTime() - start) / 1000000f;
+					System.out.println("It takes " + runTime + "ms to run BFS.");
+					break;
+				case 4:
 //                    start = System.nanoTime();
 //                    for (int i = 0; i < g.ds_dinh.size(); i++) {
 //                        v = g.ds_dinh.get(i).vertexId;
@@ -72,9 +75,10 @@ public class Main {
 //                    runTime = (System.nanoTime() - start)/1000000f;
 ////                    System.out.println("");
 //                    System.out.println("It takes "+runTime+"ms to run DFS.");
-                    break;
-                default:break;
-            }
-        } while (choice==1||choice==2||choice==3||choice==4);
-    }
+					break;
+				default:
+					break;
+			}
+		} while (choice == 1 || choice == 2 || choice == 3 || choice == 4);
+	}
 }
