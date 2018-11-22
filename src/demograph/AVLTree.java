@@ -96,7 +96,7 @@ public class AVLTree {
 		int balance = getBalance(root);
 
 		// If this root becomes unbalanced, then there 
-		// are 4 cases Left Left Case 
+		// Left Left Case 
 		if (balance > 1 && node.vertexId < root.left.vertexId) {
 			return rightRotate(root);
 		}

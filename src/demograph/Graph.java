@@ -18,40 +18,40 @@ public class Graph {
 	int so_dinh = 0;
     int so_canh = 0;
 
-//    //return true if BFS is successful
-//    public boolean BFS(int vertexId) {
-//        if (containVertex(vertexId) == false) {
-//            return false;
-//        }
-//        // Mark all the vertices as not visited(By default
-//        // set as false)
-//        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
-//        // Create a queue for BFS
-//        LinkedList<Integer> queue = new LinkedList<>();
-//
-//        // Mark the current node as visited and enqueue it
-//        visited.set(indexOf(vertexId), true);
-//        queue.add(vertexId);
-//
-//        while (!queue.isEmpty()) {
-//            // Dequeue a vertex from queue and print it
-//            vertexId = queue.poll();
-////            System.out.print(vertexId + " ");
-//
-//            // Get all adjacent vertices of the dequeued vertex 
-//            Vertex vertex = getVertex(vertexId);
-//            for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//                int adjacentVertex = vertex.adjacencyList.get(i);
-//                // If a adjacent has not been visited, then mark it
-//                // visited and enqueue it    
-//                if (visited.get(indexOf(adjacentVertex)) == false) {
-//                    visited.set(indexOf(adjacentVertex), true);
-//                    queue.add(adjacentVertex);
-//                }
-//            }
-//        }
-//        return true;
-//    }
+    //return true if BFS is successful
+    public boolean BFS(int vertexId) {
+        if (containVertex(vertexId) == false) {
+            return false;
+        }
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        // Mark the current node as visited and enqueue it
+        visited.set(indexOf(vertexId), true);
+        queue.add(vertexId);
+
+        while (!queue.isEmpty()) {
+            // Dequeue a vertex from queue and print it
+            vertexId = queue.poll();
+//            System.out.print(vertexId + " ");
+
+            // Get all adjacent vertices of the dequeued vertex 
+            Vertex vertex = getVertex(vertexId);
+            for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+                int adjacentVertex = vertex.adjacencyList.get(i);
+                // If a adjacent has not been visited, then mark it
+                // visited and enqueue it    
+                if (visited.get(indexOf(adjacentVertex)) == false) {
+                    visited.set(indexOf(adjacentVertex), true);
+                    queue.add(adjacentVertex);
+                }
+            }
+        }
+        return true;
+    }
 //
 //    public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
 //        // Mark the current node as visited and enqueue it
@@ -106,26 +106,6 @@ public class Graph {
         return result;
     }
 
-//    public Vertexold getVertex(int vertexId) {
-//        Vertex v = ds_dinh.get(indexOf(vertexId));
-//        return v;
-//return null;
-//    }
-
-    //return true if the list contain the vertex
-    public boolean containVertex(int vertexId) {
-//        for (int i = 0; i < ds_dinh.size(); i++) {
-//            if (ds_dinh.get(i).getVertexId() == vertexId) {
-//                return true;
-//            }
-//        }
-        return false;
-    }
-
-    public void addVertex(Vertexold vertex) {
-//        ds_dinh.add(vertex);
-    }
-
     public void addEdge(String type, int v1, int v2) {
         if ("directed".equals(type)) {
             //if there are not vertex v1, create new vertex before add edge
@@ -161,12 +141,19 @@ public class Graph {
                     int vertex1 = getVerticesFromString(currentLine)[0];
                     int vertex2 = getVerticesFromString(currentLine)[1];
                     //add 2 vertices into lists
-					addEdge("undirected",vertex1,vertex2);
-					so_canh++;
+//					addEdge("undirected",vertex1,vertex2);
+//					so_canh++;
                 }
                 currentLine = in.readLine();
             }
         } //currentLine doc tu file, co dang "v1 v2"
+		addEdge("undirected",1,2);so_canh++;
+		addEdge("undirected",1,3);so_canh++;
+		addEdge("undirected",1,4);so_canh++;
+		addEdge("undirected",1,5);so_canh++;
+		addEdge("undirected",2,4);so_canh++;
+		addEdge("undirected",2,5);so_canh++;
+		
 		displayGraph(ds_dinh.root);
         return ds_dinh;
     }
