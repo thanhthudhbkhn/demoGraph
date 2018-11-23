@@ -35,7 +35,7 @@ public class Graph {
 		while (!queue.isEmpty()) {
 			// Dequeue a vertex from queue and print it
 			vertexId = queue.poll();
-			System.out.print(vertexId + " ");
+//			System.out.print(vertexId + " ");
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
@@ -49,37 +49,36 @@ public class Graph {
 				}
 			}
 		}
-		System.out.println("");
+//		System.out.println("");
 		return true;
 	}
 //
-//    public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
-//        // Mark the current node as visited and enqueue it
-//        visited.set(indexOf(vertexId), true);
-////        System.out.print(vertexId + " ");
-//
-//        // Get all adjacent vertices of the vertex 
-//        Vertex vertex = getVertex(vertexId);
-//        for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//            int adjacentVertex = vertex.adjacencyList.get(i);
-//            // If a adjacent has not been visited, visit it with DFS
-//            if (visited.get(indexOf(adjacentVertex)) == false) {
-//                DFSFunction(adjacentVertex, visited);
-//            }
-//        }
-//    }
-//
-//    public boolean DFS(int vertexId) {
-//        if (containVertex(vertexId) == false) {
-//            return false;
-//        }
-//        // Mark all the vertices as not visited(By default
-//        // set as false)
-//        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
-//        DFSFunction(vertexId, visited);
-//        return true;
-//    }
-//
+
+	public void DFSFunction(int vertexId, ArrayList<Integer> visited) {
+		// Mark the current node as visited and enqueue it
+		visited.add(vertexId);
+//        System.out.print(vertexId + " ");
+
+		// Get all adjacent vertices of the vertex
+		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+			int adjacentVertex = vertex.adjacencyList.get(i);
+			// If a adjacent has not been visited, visit it with DFS
+			if (visited.contains(adjacentVertex) == false) {
+				DFSFunction(adjacentVertex, visited);
+			}
+		}
+	}
+
+	public boolean DFS(int vertexId) {
+		if (ds_dinh.getVertex(ds_dinh.root, vertexId) == null) {
+			return false;
+		}
+		// Create a list contain the visited vertices
+		ArrayList<Integer> visited = new ArrayList<Integer>();
+		DFSFunction(vertexId, visited);
+		return true;
+	}
 
 	public void displayGraph(Vertex root) {
 		if (root != null) {
@@ -143,24 +142,24 @@ public class Graph {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-//					addEdge("undirected",vertex1,vertex2);
-//					so_canh++;
+					addEdge("undirected", vertex1, vertex2);
+					so_canh++;
 				}
 				currentLine = in.readLine();
 			}
 		} //currentLine doc tu file, co dang "v1 v2"
-		addEdge("undirected", 1, 2);
-		so_canh++;
-		addEdge("undirected", 1, 3);
-		so_canh++;
-		addEdge("undirected", 1, 4);
-		so_canh++;
-		addEdge("undirected", 1, 5);
-		so_canh++;
-		addEdge("undirected", 2, 4);
-		so_canh++;
-		addEdge("undirected", 2, 5);
-		so_canh++;
+//		addEdge("undirected", 1, 2);
+//		so_canh++;
+//		addEdge("undirected", 1, 3);
+//		so_canh++;
+//		addEdge("undirected", 1, 4);
+//		so_canh++;
+//		addEdge("undirected", 1, 5);
+//		so_canh++;
+//		addEdge("undirected", 2, 4);
+//		so_canh++;
+//		addEdge("undirected", 2, 5);
+//		so_canh++;
 
 		displayGraph(ds_dinh.root);
 		return ds_dinh;

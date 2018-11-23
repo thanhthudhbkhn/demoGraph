@@ -24,6 +24,16 @@ public class Main {
 		}
 	}
 
+	static void DFSrun(Graph g, Vertex node) {
+		if (node != null) {
+			if (g.DFS(node.vertexId) == false) {
+				System.out.println("Deepth First Traversal with vertext " + node.vertexId + " failed");
+			}
+			DFSrun(g, node.left);
+			DFSrun(g, node.right);
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
 		Graph g = new Graph();
 		g.createGraph();
@@ -57,24 +67,17 @@ public class Main {
 //                    System.out.println("It takes "+runTime+"ms to find path.");
 					break;
 				case 3:
-					int v = 0;
 					long start = System.nanoTime();
 					BFSrun(g, g.ds_dinh.root);
 					float runTime = (System.nanoTime() - start) / 1000000f;
 					System.out.println("It takes " + runTime + "ms to run BFS.");
 					break;
 				case 4:
-//                    start = System.nanoTime();
-//                    for (int i = 0; i < g.ds_dinh.size(); i++) {
-//                        v = g.ds_dinh.get(i).vertexId;
-//                        if (g.DFS(v) == false) {
-//                            System.out.println("Deepth First Traversal failed.");
-//                        }
-//                        System.out.println("");
-//                    }
-//                    runTime = (System.nanoTime() - start)/1000000f;
-////                    System.out.println("");
-//                    System.out.println("It takes "+runTime+"ms to run DFS.");
+					start = System.nanoTime();
+					DFSrun(g, g.ds_dinh.root);
+					runTime = (System.nanoTime() - start) / 1000000f;
+//                    System.out.println("");
+					System.out.println("It takes " + runTime + "ms to run DFS.");
 					break;
 				default:
 					break;
