@@ -55,28 +55,26 @@ public class Main {
 					g.displayGraphInfo();
 					break;
 				case 2:
-//                    System.out.println("Enter 2 vertices: ");
-//                    int v1 = scn.nextInt();
-//                    int v2 = scn.nextInt();
-//                    long start = System.nanoTime();
-//                    if (g.findPath(v1, v2) == false) {
-//                        System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
-//                    }
-//                    float runTime = (System.nanoTime() - start)/1000000f;
-//                    System.out.println("");
-//                    System.out.println("It takes "+runTime+"ms to find path.");
+					System.out.println("Enter 2 vertices: ");
+					int v1 = scn.nextInt();
+					int v2 = scn.nextInt();
+					long start = System.nanoTime();
+					if (g.findPath(v1, v2) == false) {
+						System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
+					}
+					float runTime = (System.nanoTime() - start) / 1000000f;
+					System.out.println("\nIt takes " + runTime + "ms to find path.");
 					break;
 				case 3:
-					long start = System.nanoTime();
+					start = System.nanoTime();
 					BFSrun(g, g.ds_dinh.root);
-					float runTime = (System.nanoTime() - start) / 1000000f;
+					runTime = (System.nanoTime() - start) / 1000000f;
 					System.out.println("It takes " + runTime + "ms to run BFS.");
 					break;
 				case 4:
 					start = System.nanoTime();
 					DFSrun(g, g.ds_dinh.root);
 					runTime = (System.nanoTime() - start) / 1000000f;
-//                    System.out.println("");
 					System.out.println("It takes " + runTime + "ms to run DFS.");
 					break;
 				default:

@@ -24,7 +24,7 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<Integer>();
+		ArrayList<Integer> visited = new ArrayList<>();
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
@@ -75,7 +75,7 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<Integer>();
+		ArrayList<Integer> visited = new ArrayList<>();
 		DFSFunction(vertexId, visited);
 		return true;
 	}
@@ -142,86 +142,85 @@ public class Graph {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-					addEdge("undirected", vertex1, vertex2);
-					so_canh++;
+//					addEdge("undirected", vertex1, vertex2);
+//					so_canh++;
 				}
 				currentLine = in.readLine();
 			}
 		} //currentLine doc tu file, co dang "v1 v2"
-//		addEdge("undirected", 1, 2);
-//		so_canh++;
-//		addEdge("undirected", 1, 3);
-//		so_canh++;
-//		addEdge("undirected", 1, 4);
-//		so_canh++;
-//		addEdge("undirected", 1, 5);
-//		so_canh++;
-//		addEdge("undirected", 2, 4);
-//		so_canh++;
-//		addEdge("undirected", 2, 5);
-//		so_canh++;
+		addEdge("undirected", 1, 2);
+		so_canh++;
+		addEdge("undirected", 1, 3);
+		so_canh++;
+		addEdge("undirected", 1, 4);
+		so_canh++;
+		addEdge("undirected", 1, 5);
+		so_canh++;
+		addEdge("undirected", 2, 4);
+		so_canh++;
+		addEdge("undirected", 2, 5);
+		so_canh++;
 
 		displayGraph(ds_dinh.root);
 		return ds_dinh;
 	}
 
-//    public void displayPath(int path[], int vertex1, int vertex2) {
-////        int destination = vertex2;
-//        System.out.print(vertex2);
-//        do {
-//            int step = path[vertex2];
-//            vertex2 = step;
-//            System.out.print(" <- " + vertex2);
-//        } while (vertex2 != vertex1);
-//    }
-//
-//    public boolean findPath(int vertex1, int vertex2) {
-//        //if vertex1 or vertex2 are not existed in graph, return false
-//        if (containVertex(vertex1) == false || containVertex(vertex2) == false) {
-//            System.out.println("The vertex does not exist.");
-//            return false;
-//        }
-//        // else if 2 vertices are the same, return true
-//        if (vertex1 == vertex2) {
-//            return true;
-//        }
-//        //else
-//        int start = vertex1;
-//        // Mark all the vertices as not visited(By default
-//        // set as false)
-//        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(ds_dinh.size(), false));
-//        int[] path = new int[10]; //do lon cua mang phai > chi so lon nhat cua dinh
-//        // Create a queue for BFS
-//        LinkedList<Integer> queue = new LinkedList<>();
-//
-//        // Mark the current node as visited and enqueue it
-//        visited.set(indexOf(vertex1), true);
-//        queue.add(vertex1);
-//
-//        while (!queue.isEmpty()) {
-//            // Dequeue a vertex from queue and print it
-//            vertex1 = queue.poll();
-//
-//            // Get all adjacent vertices of the dequeued vertex 
-//            // If a adjacent has not been visited, then mark it
-//            // visited and enqueue it            
-//            Vertex vertex = getVertex(vertex1);
-//            for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//                int adjacentVertex = vertex.adjacencyList.get(i);
-//                if (visited.get(indexOf(adjacentVertex)) == false) {
-//                    visited.set(indexOf(adjacentVertex), true);
-//                    //If this vertex is the destination return true
-//                    if (adjacentVertex == vertex2) {
-//                        path[adjacentVertex] = vertex1;
-//                        displayPath(path, start, vertex2);
-//                        return true;
-//                    }
-//                    //Else continue BFS
-//                    queue.add(adjacentVertex);
-//                    path[adjacentVertex] = vertex1;
-//                }
-//            }
-//        }
-//        return false;
-//    }
+    public void displayPath(int path[], int vertex1, int vertex2) {
+//        int destination = vertex2;
+		System.out.print(vertex2);
+		do {
+			int step = path[vertex2];
+			vertex2 = step;
+			System.out.print(" <- " + vertex2);
+		} while (vertex2 != vertex1);
+	}
+
+	public boolean findPath(int vertex1, int vertex2) {
+		//if vertex1 or vertex2 are not existed in graph, return false
+		if (ds_dinh.getVertex(ds_dinh.root, vertex1) == null || ds_dinh.getVertex(ds_dinh.root, vertex2) == null) {
+			System.out.println("The vertex does not exist.");
+			return false;
+		}
+		// else if 2 vertices are the same, return true
+		if (vertex1 == vertex2) {
+			return true;
+		}
+		//else
+		int start = vertex1;
+		// Create a list contain the visited vertices
+		ArrayList<Integer> visited = new ArrayList<>();
+		int[] path = new int[10]; //do lon cua mang phai > chi so lon nhat cua dinh
+		// Create a queue for BFS
+		LinkedList<Integer> queue = new LinkedList<>();
+
+		// Mark the current node as visited and enqueue it
+		visited.add(vertex1);
+		queue.add(vertex1);
+
+		while (!queue.isEmpty()) {
+			// Dequeue a vertex from queue and print it
+			vertex1 = queue.poll();
+
+			// Get all adjacent vertices of the dequeued vertex 
+			// If a adjacent has not been visited, then mark it
+			// visited and enqueue it            
+			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertex1);
+			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+				int adjacentVertex = vertex.adjacencyList.get(i);
+				if (visited.contains(adjacentVertex) == false) {
+					visited.add(adjacentVertex);
+					//If this vertex is the destination return true
+					if (adjacentVertex == vertex2) {
+						path[adjacentVertex] = vertex1;
+						displayPath(path, start, vertex2);
+						return true;
+					}
+					//Else continue BFS
+					queue.add(adjacentVertex);
+					path[adjacentVertex] = vertex1;
+				}
+			}
+		}
+		return false;
+	}
 }
