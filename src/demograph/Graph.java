@@ -142,30 +142,30 @@ public class Graph {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-//					addEdge("undirected", vertex1, vertex2);
-//					so_canh++;
+					addEdge("undirected", vertex1, vertex2);
+					so_canh++;
 				}
 				currentLine = in.readLine();
 			}
 		} //currentLine doc tu file, co dang "v1 v2"
-		addEdge("undirected", 1, 2);
-		so_canh++;
-		addEdge("undirected", 1, 3);
-		so_canh++;
-		addEdge("undirected", 1, 4);
-		so_canh++;
-		addEdge("undirected", 1, 5);
-		so_canh++;
-		addEdge("undirected", 2, 4);
-		so_canh++;
-		addEdge("undirected", 2, 5);
-		so_canh++;
+//		addEdge("undirected", 1, 2);
+//		so_canh++;
+//		addEdge("undirected", 1, 3);
+//		so_canh++;
+//		addEdge("undirected", 1, 4);
+//		so_canh++;
+//		addEdge("undirected", 1, 5);
+//		so_canh++;
+//		addEdge("undirected", 2, 4);
+//		so_canh++;
+//		addEdge("undirected", 2, 5);
+//		so_canh++;
 
 		displayGraph(ds_dinh.root);
 		return ds_dinh;
 	}
 
-    public void displayPath(int path[], int vertex1, int vertex2) {
+	public void displayPath(int path[], int vertex1, int vertex2) {
 //        int destination = vertex2;
 		System.out.print(vertex2);
 		do {
@@ -189,7 +189,7 @@ public class Graph {
 		int start = vertex1;
 		// Create a list contain the visited vertices
 		ArrayList<Integer> visited = new ArrayList<>();
-		int[] path = new int[10]; //do lon cua mang phai > chi so lon nhat cua dinh
+		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
