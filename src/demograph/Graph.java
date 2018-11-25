@@ -169,7 +169,7 @@ public class Graph {
 //		addEdge("undirected", 4, 2);
 //		so_canh++;
 //		addEdge("undirected", 5, 2);
-//		so_canh++;
+//		so_canh++; 
 		displayGraph();
 
 		return ds_dinh;
