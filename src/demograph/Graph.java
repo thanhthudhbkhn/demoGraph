@@ -39,15 +39,16 @@ public class Graph {
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				// If a adjacent has not been visited, then mark it
-				// visited and enqueue it    
-				if (visited.contains(adjacentVertex) == false) {
-					visited.add(adjacentVertex);
-					queue.add(adjacentVertex);
-				}
-			}
+			tham(vertex.adjacencyList.root,visited,queue);
+//			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+//				int adjacentVertex = vertex.adjacencyList.get(i);
+//				// If a adjacent has not been visited, then mark it
+//				// visited and enqueue it    
+//				if (visited.contains(adjacentVertex) == false) {
+//					visited.add(adjacentVertex);
+//					queue.add(adjacentVertex);
+//				}
+//			}
 		}
 //		System.out.println("");
 		return true;
@@ -55,19 +56,19 @@ public class Graph {
 //
 
 	public void DFSFunction(int vertexId, ArrayList<Integer> visited) {
-		// Mark the current node as visited and enqueue it
-		visited.add(vertexId);
-//        System.out.print(vertexId + " ");
-
-		// Get all adjacent vertices of the vertex
-		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-			int adjacentVertex = vertex.adjacencyList.get(i);
-			// If a adjacent has not been visited, visit it with DFS
-			if (visited.contains(adjacentVertex) == false) {
-				DFSFunction(adjacentVertex, visited);
-			}
-		}
+//		// Mark the current node as visited and enqueue it
+//		visited.add(vertexId);
+////        System.out.print(vertexId + " ");
+//
+//		// Get all adjacent vertices of the vertex
+//		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+//		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+//			int adjacentVertex = vertex.adjacencyList.get(i);
+//			// If a adjacent has not been visited, visit it with DFS
+//			if (visited.contains(adjacentVertex) == false) {
+//				DFSFunction(adjacentVertex, visited);
+//			}
+//		}
 	}
 
 	public boolean DFS(int vertexId) {
@@ -82,12 +83,30 @@ public class Graph {
 
 	public void displayGraph(Vertex root) {
 		if (root != null) {
-			System.out.println(root.vertexId + " " + root.adjacencyList);
+			System.out.println(root.vertexId+" ");
+			displayGraph(root.adjacencyList.root);
 			displayGraph(root.left);
 			displayGraph(root.right);
 		}
 	}
-//    
+	
+	public void tham(Vertex root, ArrayList<Integer> visited, LinkedList<Integer> queue) {
+		if (root != null) {
+			if (visited.contains(root.vertexId) == false) {
+				visited.add(root.vertexId);
+				queue.add(root.vertexId);
+			}
+			tham(root.left,visited,queue);
+			tham(root.right,visited,queue);
+		}
+//		int adjacentVertex = vertex.adjacencyList.get(i);
+//				// If a adjacent has not been visited, then mark it
+//				// visited and enqueue it    
+//				if (visited.contains(adjacentVertex) == false) {
+//					visited.add(adjacentVertex);
+//					queue.add(adjacentVertex);
+//				}
+	}
 
 	public void displayGraphInfo() {
 		System.out.println("There are:");
@@ -109,22 +128,24 @@ public class Graph {
 
 	public void addEdge(String type, int v1, int v2) {
 		if ("directed".equals(type)) {
+			Vertex dst = new Vertex(v2);
 			//if there are not vertex v1, create new vertex before add edge
 			if (ds_dinh.getVertex(ds_dinh.root, v1) == null) {
 				Vertex v = new Vertex(v1);
-				v.adjacencyList.add(v2);
+				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root,dst);
 				ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
 				so_dinh++;
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.getVertex(ds_dinh.root, v1);
-				v.adjacencyList.add(v2);
+				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root,dst);
 				if (ds_dinh.getVertex(ds_dinh.root, v2) == null) {
 					v = new Vertex(v2);
 					ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
 					so_dinh++;
 				}
 			}
+			
 
 		} else if ("undirected".equals(type)) {
 			addEdge("directed", v1, v2);
@@ -161,7 +182,7 @@ public class Graph {
 //		addEdge("undirected", 2, 5);
 //		so_canh++;
 
-		displayGraph(ds_dinh.root);
+//		displayGraph(ds_dinh.root);
 		return ds_dinh;
 	}
 
@@ -175,52 +196,52 @@ public class Graph {
 		} while (vertex2 != vertex1);
 	}
 
-	public boolean findPath(int vertex1, int vertex2) {
-		//if vertex1 or vertex2 are not existed in graph, return false
-		if (ds_dinh.getVertex(ds_dinh.root, vertex1) == null || ds_dinh.getVertex(ds_dinh.root, vertex2) == null) {
-			System.out.println("The vertex does not exist.");
-			return false;
-		}
-		// else if 2 vertices are the same, return true
-		if (vertex1 == vertex2) {
-			return true;
-		}
-		//else
-		int start = vertex1;
-		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
-		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
-		// Create a queue for BFS
-		LinkedList<Integer> queue = new LinkedList<>();
-
-		// Mark the current node as visited and enqueue it
-		visited.add(vertex1);
-		queue.add(vertex1);
-
-		while (!queue.isEmpty()) {
-			// Dequeue a vertex from queue and print it
-			vertex1 = queue.poll();
-
-			// Get all adjacent vertices of the dequeued vertex 
-			// If a adjacent has not been visited, then mark it
-			// visited and enqueue it            
-			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertex1);
-			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				if (visited.contains(adjacentVertex) == false) {
-					visited.add(adjacentVertex);
-					//If this vertex is the destination return true
-					if (adjacentVertex == vertex2) {
-						path[adjacentVertex] = vertex1;
-						displayPath(path, start, vertex2);
-						return true;
-					}
-					//Else continue BFS
-					queue.add(adjacentVertex);
-					path[adjacentVertex] = vertex1;
-				}
-			}
-		}
-		return false;
-	}
+//	public boolean findPath(int vertex1, int vertex2) {
+//		//if vertex1 or vertex2 are not existed in graph, return false
+//		if (ds_dinh.getVertex(ds_dinh.root, vertex1) == null || ds_dinh.getVertex(ds_dinh.root, vertex2) == null) {
+//			System.out.println("The vertex does not exist.");
+//			return false;
+//		}
+//		// else if 2 vertices are the same, return true
+//		if (vertex1 == vertex2) {
+//			return true;
+//		}
+//		//else
+//		int start = vertex1;
+//		// Create a list contain the visited vertices
+//		ArrayList<Integer> visited = new ArrayList<>();
+//		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
+//		// Create a queue for BFS
+//		LinkedList<Integer> queue = new LinkedList<>();
+//
+//		// Mark the current node as visited and enqueue it
+//		visited.add(vertex1);
+//		queue.add(vertex1);
+//
+//		while (!queue.isEmpty()) {
+//			// Dequeue a vertex from queue and print it
+//			vertex1 = queue.poll();
+//
+//			// Get all adjacent vertices of the dequeued vertex 
+//			// If a adjacent has not been visited, then mark it
+//			// visited and enqueue it            
+//			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertex1);
+//			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+//				int adjacentVertex = vertex.adjacencyList.get(i);
+//				if (visited.contains(adjacentVertex) == false) {
+//					visited.add(adjacentVertex);
+//					//If this vertex is the destination return true
+//					if (adjacentVertex == vertex2) {
+//						path[adjacentVertex] = vertex1;
+//						displayPath(path, start, vertex2);
+//						return true;
+//					}
+//					//Else continue BFS
+//					queue.add(adjacentVertex);
+//					path[adjacentVertex] = vertex1;
+//				}
+//			}
+//		}
+//		return false;
+//	}
 }

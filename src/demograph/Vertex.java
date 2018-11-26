@@ -15,7 +15,7 @@ import java.util.List;
 public class Vertex {
 
 	int vertexId, height;
-    List<Integer> adjacencyList = new LinkedList();
+    AVLTree adjacencyList = new AVLTree();
 	Vertex left;
 	Vertex right;
 

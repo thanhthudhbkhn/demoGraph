@@ -59,9 +59,9 @@ public class Main {
 					int v1 = scn.nextInt();
 					int v2 = scn.nextInt();
 					long start = System.nanoTime();
-					if (g.findPath(v1, v2) == false) {
-						System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
-					}
+//					if (g.findPath(v1, v2) == false) {
+//						System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
+//					}
 					float runTime = (System.nanoTime() - start) / 1000000f;
 					System.out.println("\nIt takes " + runTime + "ms to find path.");
 					break;
