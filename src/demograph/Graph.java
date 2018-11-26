@@ -24,12 +24,12 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
+        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.add(vertexId);
+		visited.set(vertexId,true);
 		queue.add(vertexId);
 
 		while (!queue.isEmpty()) {
@@ -40,15 +40,6 @@ public class Graph {
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
 			tham(vertex.adjacencyList.root,visited,queue);
-//			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//				int adjacentVertex = vertex.adjacencyList.get(i);
-//				// If a adjacent has not been visited, then mark it
-//				// visited and enqueue it    
-//				if (visited.contains(adjacentVertex) == false) {
-//					visited.add(adjacentVertex);
-//					queue.add(adjacentVertex);
-//				}
-//			}
 		}
 //		System.out.println("");
 		return true;
@@ -90,22 +81,15 @@ public class Graph {
 		}
 	}
 	
-	public void tham(Vertex root, ArrayList<Integer> visited, LinkedList<Integer> queue) {
+	public void tham(Vertex root, ArrayList<Boolean> visited, LinkedList<Integer> queue) {
 		if (root != null) {
-			if (visited.contains(root.vertexId) == false) {
-				visited.add(root.vertexId);
+			if (visited.get(root.vertexId) == false) {
+				visited.set(root.vertexId,true);
 				queue.add(root.vertexId);
 			}
 			tham(root.left,visited,queue);
 			tham(root.right,visited,queue);
 		}
-//		int adjacentVertex = vertex.adjacencyList.get(i);
-//				// If a adjacent has not been visited, then mark it
-//				// visited and enqueue it    
-//				if (visited.contains(adjacentVertex) == false) {
-//					visited.add(adjacentVertex);
-//					queue.add(adjacentVertex);
-//				}
 	}
 
 	public void displayGraphInfo() {
