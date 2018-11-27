@@ -24,12 +24,13 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.add(vertexId);
+		visited.set(vertexId, true);
 		queue.add(vertexId);
 
 		while (!queue.isEmpty()) {
@@ -43,8 +44,8 @@ public class Graph {
 				int adjacentVertex = vertex.adjacencyList.get(i);
 				// If a adjacent has not been visited, then mark it
 				// visited and enqueue it    
-				if (visited.contains(adjacentVertex) == false) {
-					visited.add(adjacentVertex);
+				if (visited.get(adjacentVertex) == false) {
+					visited.set(adjacentVertex, true);
 					queue.add(adjacentVertex);
 				}
 			}
@@ -54,9 +55,9 @@ public class Graph {
 	}
 //
 
-	public void DFSFunction(int vertexId, ArrayList<Integer> visited) {
+	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
 		// Mark the current node as visited and enqueue it
-		visited.add(vertexId);
+		visited.set(vertexId,true);
 //        System.out.print(vertexId + " ");
 
 		// Get all adjacent vertices of the vertex
@@ -64,7 +65,7 @@ public class Graph {
 		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
 			int adjacentVertex = vertex.adjacencyList.get(i);
 			// If a adjacent has not been visited, visit it with DFS
-			if (visited.contains(adjacentVertex) == false) {
+			if (visited.get(adjacentVertex) == false) {
 				DFSFunction(adjacentVertex, visited);
 			}
 		}
@@ -75,7 +76,7 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
 		DFSFunction(vertexId, visited);
 		return true;
 	}
@@ -161,7 +162,7 @@ public class Graph {
 //		addEdge("undirected", 2, 5);
 //		so_canh++;
 
-		displayGraph(ds_dinh.root);
+//		displayGraph(ds_dinh.root);
 		return ds_dinh;
 	}
 
@@ -188,13 +189,13 @@ public class Graph {
 		//else
 		int start = vertex1;
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
 		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.add(vertex1);
+		visited.set(vertex1,true);
 		queue.add(vertex1);
 
 		while (!queue.isEmpty()) {
@@ -207,8 +208,8 @@ public class Graph {
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertex1);
 			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
 				int adjacentVertex = vertex.adjacencyList.get(i);
-				if (visited.contains(adjacentVertex) == false) {
-					visited.add(adjacentVertex);
+				if (visited.get(adjacentVertex) == false) {
+					visited.set(adjacentVertex,true);
 					//If this vertex is the destination return true
 					if (adjacentVertex == vertex2) {
 						path[adjacentVertex] = vertex1;

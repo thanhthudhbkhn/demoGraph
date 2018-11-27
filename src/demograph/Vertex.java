@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Computer
+ * @author thanhthu
  */
 public class Vertex {
 
