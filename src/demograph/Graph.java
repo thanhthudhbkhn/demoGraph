@@ -24,12 +24,12 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-        ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.set(vertexId,true);
+		visited.set(vertexId, true);
 		queue.add(vertexId);
 
 		while (!queue.isEmpty()) {
@@ -39,20 +39,21 @@ public class Graph {
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-			tham(vertex.adjacencyList.root,visited,queue);
+			tham(vertex.adjacencyList.root, visited, queue);
 		}
 //		System.out.println("");
 		return true;
 	}
 //
 
-	public void DFSFunction(int vertexId, ArrayList<Integer> visited) {
-//		// Mark the current node as visited and enqueue it
-//		visited.add(vertexId);
-////        System.out.print(vertexId + " ");
-//
-//		// Get all adjacent vertices of the vertex
-//		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
+		// Mark the current node as visited and enqueue it
+		visited.set(vertexId, true);
+        System.out.print(vertexId + " ");
+
+		// Get all adjacent vertices of the vertex
+		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+
 //		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
 //			int adjacentVertex = vertex.adjacencyList.get(i);
 //			// If a adjacent has not been visited, visit it with DFS
@@ -60,6 +61,12 @@ public class Graph {
 //				DFSFunction(adjacentVertex, visited);
 //			}
 //		}
+		if (vertex.adjacencyList.root != null) {
+			if (visited.get(vertex.adjacencyList.root.vertexId) == false) {
+				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
+				DFSFunction(vertex.adjacencyList.root.right.vertexId, visited);
+			}
+		}
 	}
 
 	public boolean DFS(int vertexId) {
@@ -67,28 +74,29 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Integer> visited = new ArrayList<>();
+		ArrayList<Boolean> visited = new ArrayList<Boolean>(Arrays.asList(new Boolean[2000000]));
+		Collections.fill(visited, Boolean.FALSE);
 		DFSFunction(vertexId, visited);
 		return true;
 	}
 
 	public void displayGraph(Vertex root) {
 		if (root != null) {
-			System.out.println(root.vertexId+" ");
+			System.out.println(root.vertexId + " ");
 			displayGraph(root.adjacencyList.root);
 			displayGraph(root.left);
 			displayGraph(root.right);
 		}
 	}
-	
+
 	public void tham(Vertex root, ArrayList<Boolean> visited, LinkedList<Integer> queue) {
 		if (root != null) {
 			if (visited.get(root.vertexId) == false) {
-				visited.set(root.vertexId,true);
+				visited.set(root.vertexId, true);
 				queue.add(root.vertexId);
 			}
-			tham(root.left,visited,queue);
-			tham(root.right,visited,queue);
+			tham(root.left, visited, queue);
+			tham(root.right, visited, queue);
 		}
 	}
 
@@ -103,7 +111,7 @@ public class Graph {
 		//get 2 vertexs from an line "v1 v2"
 		int[] result = new int[2];
 		//String[] vertices = {v1,v2}
-		String[] vertices = str.split(" ");
+		String[] vertices = str.split("\t");
 		//Convert from string into integer
 		result[0] = Integer.parseInt(vertices[0]);
 		result[1] = Integer.parseInt(vertices[1]);
@@ -116,20 +124,19 @@ public class Graph {
 			//if there are not vertex v1, create new vertex before add edge
 			if (ds_dinh.getVertex(ds_dinh.root, v1) == null) {
 				Vertex v = new Vertex(v1);
-				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root,dst);
+				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root, dst);
 				ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
 				so_dinh++;
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.getVertex(ds_dinh.root, v1);
-				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root,dst);
+				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root, dst);
 				if (ds_dinh.getVertex(ds_dinh.root, v2) == null) {
 					v = new Vertex(v2);
 					ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
 					so_dinh++;
 				}
 			}
-			
 
 		} else if ("undirected".equals(type)) {
 			addEdge("directed", v1, v2);
@@ -140,14 +147,19 @@ public class Graph {
 	public AVLTree createGraph() throws FileNotFoundException, IOException {
 		//define path for open file with shorter address
 		String path = "D:/gradute/demoGraph/src";
-		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
-			String currentLine = in.readLine(); //currentLine has format: "v1 v2"
-			while (currentLine != null) {
+//		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(path + "/roadNet/roadNet-PA.txt"))) {
+			String currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();//currentLine has format: "v1 v2"
+			while (currentLine != null && so_canh < 10) {
 				if (!"".equals(currentLine)) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-					addEdge("undirected", vertex1, vertex2);
+					addEdge("directed", vertex1, vertex2);
 					so_canh++;
 				}
 				currentLine = in.readLine();
