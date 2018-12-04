@@ -24,7 +24,7 @@ public class Graph {
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(1000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(100000, false));
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
@@ -35,7 +35,7 @@ public class Graph {
 		while (!queue.isEmpty()) {
 			// Dequeue a vertex from queue and print it
 			vertexId = queue.poll();
-			System.out.print(vertexId + " ");
+//			System.out.print(vertexId + " ");
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = getVertex(vertexId);
@@ -74,7 +74,7 @@ public class Graph {
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(1000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(100000, false));
 		DFSFunction(vertexId, visited);
 		return true;
 	}
@@ -114,24 +114,17 @@ public class Graph {
 		if ("directed".equals(type)) {
 			//if there are not vertex v1, create new vertex before add edge
 			if (ds_dinh.get(v1) == null) {
-				System.out.println(v1 + " chua co. tao moi.");
 				Vertex v = new Vertex(v1);
-				v.adjacencyList.add(v2);
-				System.out.println("added " + v2 + " vao ds ke cua " + v1 + v.adjacencyList);
 				addVertex(v);
-				System.out.println("added " + v.vertexId + v.adjacencyList);
+				ds_dinh.get(v1).adjacencyList.add(v2);
+								
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
-				System.out.println(v1 + " da co. Lay.");
 				Vertex v = getVertex(v1);
-				System.out.println("Lay ra dinh "+ v1+ "co ds "+v.adjacencyList);
 				v.adjacencyList.add(v2);
-				System.out.println("added " + v2 + " vao ds ke cua " + v1 +v.adjacencyList);
 				if (ds_dinh.get(v2) == null) {
-					System.out.println(v2 + " chua co. Tao moi.");
 					v = new Vertex(v2);
 					addVertex(v);
-					System.out.println("added " + v.vertexId + v.adjacencyList);
 				}
 			}
 		} else if ("undirected".equals(type)) {
@@ -150,16 +143,16 @@ public class Graph {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-//					addEdge("undirected", vertex1, vertex2);
-//					so_canh++;
+					addEdge("undirected", vertex1, vertex2);
+					so_canh++;
 				}
 				currentLine = in.readLine();
 			}
 		} //currentLine doc tu file, co dang "v1 v2"
-		addEdge("undirected", 1, 2);
-		so_canh++;
-		addEdge("undirected", 1, 3);
-		so_canh++;
+//		addEdge("undirected", 1, 2);
+//		so_canh++;
+//		addEdge("undirected", 1, 3);
+//		so_canh++;
 //		addEdge("undirected", 1, 4);
 //		so_canh++;
 //		addEdge("undirected", 1, 5);
@@ -169,7 +162,7 @@ public class Graph {
 //		addEdge("undirected", 2, 5);
 //		so_canh++;
 
-		ds_dinh.preorder();
+//		ds_dinh.preorder();
 		return ds_dinh;
 	}
 
@@ -197,7 +190,7 @@ public class Graph {
 		int start = vertex1;
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(1000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(100000, false));
 		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();

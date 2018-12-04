@@ -12,7 +12,7 @@ package demograph;
 public class TreapTree {
 
 	Vertex root;
-	private static Vertex nil = new Vertex(0);
+	private static Vertex nil = new Vertex(-1);
 
 	/**
 	 * Constructor *
