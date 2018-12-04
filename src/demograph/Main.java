@@ -13,6 +13,26 @@ import java.util.Scanner;
  * @author thanhthu
  */
 public class Main {
+	
+	static void BFSrun(Graph g, Vertex node) {
+		if (node != null) {
+			if (g.BFS(node.vertexId) == false) {
+				System.out.println("Breadth First Traversal with vertext " + node.vertexId + " failed");
+			}
+			BFSrun(g, node.left);
+			BFSrun(g, node.right);
+		}
+	}
+	
+	static void DFSrun(Graph g, Vertex node) {
+		if (node != null) {
+			if (g.DFS(node.vertexId) == false) {
+				System.out.println("Deepth First Traversal with vertext " + node.vertexId + " failed");
+			}
+			DFSrun(g, node.left);
+			DFSrun(g, node.right);
+		}
+	}
 
     public static void main(String[] args) throws IOException {
         Graph g = new Graph();
@@ -49,26 +69,15 @@ public class Main {
                 case 3:
                     int v=0;
                     start = System.nanoTime();
-                    for (int i = 0; i < g.ds_dinh.size(); i++) {
-                        v = g.ds_dinh.get(i).vertexId;
-                        if (g.BFS(v) == false) {
-                            System.out.println("Breadth First Traversal failed with vertex ."+v);
-                        }
-//                        System.out.println("");
-                    }
+//                    BFSrun(g, g.ds_dinh.root);
+					g.BFS(1);
                     runTime = (System.nanoTime() - start)/1000000f;
 //                    System.out.println("");
                     System.out.println("It takes "+runTime+"ms to run BFS.");
                     break;
                 case 4:
                     start = System.nanoTime();
-                    for (int i = 0; i < g.ds_dinh.size(); i++) {
-                        v = g.ds_dinh.get(i).vertexId;
-                        if (g.DFS(v) == false) {
-                            System.out.println("Deepth First Traversal failed.");
-                        }
-                        System.out.println("");
-                    }
+                    DFSrun(g, g.ds_dinh.root);
                     runTime = (System.nanoTime() - start)/1000000f;
 //                    System.out.println("");
                     System.out.println("It takes "+runTime+"ms to run DFS.");
