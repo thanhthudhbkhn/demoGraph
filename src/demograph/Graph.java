@@ -36,7 +36,6 @@ public class Graph {
 		while (!queue.isEmpty()) {
 			// Dequeue a vertex from queue and print it
 			vertexId = queue.poll();
-//			System.out.print(vertexId + " ");
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
@@ -50,7 +49,6 @@ public class Graph {
 				}
 			}
 		}
-//		System.out.println("");
 		return true;
 	}
 //
@@ -58,7 +56,6 @@ public class Graph {
 	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
 		// Mark the current node as visited and enqueue it
 		visited.set(vertexId,true);
-//        System.out.print(vertexId + " ");
 
 		// Get all adjacent vertices of the vertex
 		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
@@ -100,7 +97,6 @@ public class Graph {
 	public int[] getVerticesFromString(String str) {
 		//get 2 vertexs from an line "v1 v2"
 		int[] result = new int[2];
-		//String[] vertices = {v1,v2}
 		String[] vertices = str.split(" ");
 		//Convert from string into integer
 		result[0] = Integer.parseInt(vertices[0]);
@@ -148,26 +144,12 @@ public class Graph {
 				}
 				currentLine = in.readLine();
 			}
-		} //currentLine doc tu file, co dang "v1 v2"
-//		addEdge("undirected", 1, 2);
-//		so_canh++;
-//		addEdge("undirected", 1, 3);
-//		so_canh++;
-//		addEdge("undirected", 1, 4);
-//		so_canh++;
-//		addEdge("undirected", 1, 5);
-//		so_canh++;
-//		addEdge("undirected", 2, 4);
-//		so_canh++;
-//		addEdge("undirected", 2, 5);
-//		so_canh++;
-
+		}
 //		displayGraph(ds_dinh.root);
 		return ds_dinh;
 	}
 
 	public void displayPath(int path[], int vertex1, int vertex2) {
-//        int destination = vertex2;
 		System.out.print(vertex2);
 		do {
 			int step = path[vertex2];
