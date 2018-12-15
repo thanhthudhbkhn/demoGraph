@@ -49,22 +49,20 @@ public class Graph {
 	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
 		// Mark the current node as visited and enqueue it
 		visited.set(vertexId, true);
-        System.out.print(vertexId + " ");
+//		System.out.print(vertexId + " ");
 
 		// Get all adjacent vertices of the vertex
 		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
 
-//		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//			int adjacentVertex = vertex.adjacencyList.get(i);
-//			// If a adjacent has not been visited, visit it with DFS
-//			if (visited.contains(adjacentVertex) == false) {
-//				DFSFunction(adjacentVertex, visited);
-//			}
-//		}
 		if (vertex.adjacencyList.root != null) {
 			if (visited.get(vertex.adjacencyList.root.vertexId) == false) {
-				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
+				DFSFunction(vertex.adjacencyList.root.vertexId, visited);
+			}
+			if (vertex.adjacencyList.root.right != null && visited.get(vertex.adjacencyList.root.right.vertexId) == false) {
 				DFSFunction(vertex.adjacencyList.root.right.vertexId, visited);
+			}
+			if (vertex.adjacencyList.root.left != null && visited.get(vertex.adjacencyList.root.left.vertexId) == false) {
+				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
 			}
 		}
 	}
@@ -74,6 +72,7 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
+//		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		ArrayList<Boolean> visited = new ArrayList<Boolean>(Arrays.asList(new Boolean[2000000]));
 		Collections.fill(visited, Boolean.FALSE);
 		DFSFunction(vertexId, visited);
