@@ -26,11 +26,11 @@ public class Main {
 
 	static void DFSrun(Graph g, Vertex node) {
 		if (node != null) {
-			if (g.DFS(node.vertexId) == false) {
-				System.out.println("Deepth First Traversal with vertext " + node.vertexId + " failed");
-			}
-			DFSrun(g, node.left);
-			DFSrun(g, node.right);
+//			if (g.DFS(node.vertexId) == false) {
+//				System.out.println("Deepth First Traversal with vertext " + node.vertexId + " failed");
+//			}
+//			DFSrun(g, node.left);
+//			DFSrun(g, node.right);
 		}
 	}
 

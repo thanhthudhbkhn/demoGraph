@@ -121,6 +121,58 @@ public class AVLTree {
 		/* return the (unchanged) root pointer */
 		return root;
 	}
+	
+	Vertex insert(Vertex root, int node) {
+
+		/* 1. Perform the normal BST insertion */
+		if (root == null) {
+			return new Vertex(node);
+		}
+
+		if (node < root.vertexId) {
+			root.left = insert(root.left, node);
+		} else if (node > root.vertexId) {
+			root.right = insert(root.right, node);
+		} else // Duplicate keys not allowed 
+		{
+			return root;
+		}
+
+		/* 2. Update height of this ancestor root */
+		root.height = 1 + max(height(root.left),
+				height(root.right));
+
+		/* 3. Get the balance factor of this ancestor 
+			root to check whether this root became 
+			unbalanced */
+		int balance = getBalance(root);
+
+		// If this root becomes unbalanced, then there 
+		// Left Left Case 
+		if (balance > 1 && node < root.left.vertexId) {
+			return rightRotate(root);
+		}
+
+		// Right Right Case 
+		if (balance < -1 && node > root.right.vertexId) {
+			return leftRotate(root);
+		}
+
+		// Left Right Case 
+		if (balance > 1 && node > root.left.vertexId) {
+			root.left = leftRotate(root.left);
+			return rightRotate(root);
+		}
+
+		// Right Left Case 
+		if (balance < -1 && node < root.right.vertexId) {
+			root.right = rightRotate(root.right);
+			return leftRotate(root);
+		}
+
+		/* return the (unchanged) root pointer */
+		return root;
+	}
 
 	// A utility function to print preorder traversal of the tree. 
 	// The function also prints height of every node 

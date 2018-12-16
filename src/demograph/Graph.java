@@ -24,12 +24,12 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
+		AVLTree visited = new AVLTree();
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.set(vertexId, true);
+		visited.root = visited.insert(visited.root, vertexId);
 		queue.add(vertexId);
 
 		while (!queue.isEmpty()) {
@@ -44,41 +44,39 @@ public class Graph {
 //		System.out.println("");
 		return true;
 	}
+
+//	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
+//		// Mark the current node as visited and enqueue it
+//		visited.set(vertexId, true);
+////		System.out.print(vertexId + " ");
 //
-
-	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
-		// Mark the current node as visited and enqueue it
-		visited.set(vertexId, true);
-//		System.out.print(vertexId + " ");
-
-		// Get all adjacent vertices of the vertex
-		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-
-		if (vertex.adjacencyList.root != null) {
-			if (visited.get(vertex.adjacencyList.root.vertexId) == false) {
-				DFSFunction(vertex.adjacencyList.root.vertexId, visited);
-			}
-			if (vertex.adjacencyList.root.right != null && visited.get(vertex.adjacencyList.root.right.vertexId) == false) {
-				DFSFunction(vertex.adjacencyList.root.right.vertexId, visited);
-			}
-			if (vertex.adjacencyList.root.left != null && visited.get(vertex.adjacencyList.root.left.vertexId) == false) {
-				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
-			}
-		}
-	}
-
-	public boolean DFS(int vertexId) {
-		if (ds_dinh.getVertex(ds_dinh.root, vertexId) == null) {
-			return false;
-		}
-		// Create a list contain the visited vertices
-//		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
-		ArrayList<Boolean> visited = new ArrayList<Boolean>(Arrays.asList(new Boolean[2000000]));
-		Collections.fill(visited, Boolean.FALSE);
-		DFSFunction(vertexId, visited);
-		return true;
-	}
-
+//		// Get all adjacent vertices of the vertex
+//		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+//
+//		if (vertex.adjacencyList.root != null) {
+//			if (visited.get(vertex.adjacencyList.root.vertexId) == false) {
+//				DFSFunction(vertex.adjacencyList.root.vertexId, visited);
+//			}
+//			if (vertex.adjacencyList.root.right != null && visited.get(vertex.adjacencyList.root.right.vertexId) == false) {
+//				DFSFunction(vertex.adjacencyList.root.right.vertexId, visited);
+//			}
+//			if (vertex.adjacencyList.root.left != null && visited.get(vertex.adjacencyList.root.left.vertexId) == false) {
+//				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
+//			}
+//		}
+//	}
+//
+//	public boolean DFS(int vertexId) {
+//		if (ds_dinh.getVertex(ds_dinh.root, vertexId) == null) {
+//			return false;
+//		}
+//		// Create a list contain the visited vertices
+////		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
+//		ArrayList<Boolean> visited = new ArrayList<Boolean>(Arrays.asList(new Boolean[2000000]));
+//		Collections.fill(visited, Boolean.FALSE);
+//		DFSFunction(vertexId, visited);
+//		return true;
+//	}
 	public void displayGraph(Vertex root) {
 		if (root != null) {
 			System.out.println(root.vertexId + " ");
@@ -88,14 +86,24 @@ public class Graph {
 		}
 	}
 
-	public void tham(Vertex root, ArrayList<Boolean> visited, LinkedList<Integer> queue) {
-		if (root != null) {
-			if (visited.get(root.vertexId) == false) {
-				visited.set(root.vertexId, true);
-				queue.add(root.vertexId);
+	public void tham(Vertex vertex, AVLTree visited, LinkedList<Integer> queue) {
+		if (vertex != null) {
+			if (visited.getVertex(visited.root, vertex.vertexId) == null) {
+				visited.root = visited.insert(visited.root, vertex.vertexId);
+				
+//				System.out.println("\nds da tham: ");
+//				displayGraph(visited.root);
+//				System.out.println("--");
+				
+				queue.add(vertex.vertexId);
+//				System.out.println("queue: " + queue);
 			}
-			tham(root.left, visited, queue);
-			tham(root.right, visited, queue);
+			if (vertex.left != null) {
+				tham(vertex.left, visited, queue);
+			}
+			if (vertex.right != null) {
+				tham(vertex.right, visited, queue);
+			}
 		}
 	}
 
@@ -153,7 +161,7 @@ public class Graph {
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();//currentLine has format: "v1 v2"
-			while (currentLine != null && so_canh < 10) {
+			while (currentLine != null && so_canh < 100000) {
 				if (!"".equals(currentLine)) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
