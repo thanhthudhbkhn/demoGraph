@@ -49,22 +49,20 @@ public class Graph {
 	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
 		// Mark the current node as visited and enqueue it
 		visited.set(vertexId, true);
-        System.out.print(vertexId + " ");
+//        System.out.print(vertexId + " ");
 
 		// Get all adjacent vertices of the vertex
 		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-
-//		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-//			int adjacentVertex = vertex.adjacencyList.get(i);
-//			// If a adjacent has not been visited, visit it with DFS
-//			if (visited.contains(adjacentVertex) == false) {
-//				DFSFunction(adjacentVertex, visited);
-//			}
-//		}
 		if (vertex.adjacencyList.root != null) {
-			if (visited.get(vertex.adjacencyList.root.vertexId) == false) {
-				DFSFunction(vertex.adjacencyList.root.left.vertexId, visited);
-				DFSFunction(vertex.adjacencyList.root.right.vertexId, visited);
+			Vertex adjacent_root = vertex.adjacencyList.root;
+			if (visited.get(adjacent_root.vertexId) == false) {
+				DFSFunction(adjacent_root.vertexId, visited);
+			}
+			if (adjacent_root.left != null && visited.get(adjacent_root.left.vertexId) == false) {
+				DFSFunction(adjacent_root.left.vertexId, visited);
+			}
+			if (adjacent_root.right != null && visited.get(adjacent_root.right.vertexId) == false) {
+				DFSFunction(adjacent_root.right.vertexId, visited);
 			}
 		}
 	}
@@ -154,7 +152,7 @@ public class Graph {
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();//currentLine has format: "v1 v2"
-			while (currentLine != null && so_canh < 10) {
+			while (currentLine != null && so_canh < 10000) {
 				if (!"".equals(currentLine)) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
