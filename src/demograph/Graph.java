@@ -57,10 +57,10 @@ public class Graph {
 			if (visited.getVertex(visited.root, adjacent_root.vertexId) == null) {
 				DFSFunction(adjacent_root.vertexId, visited);
 			}
-			if (adjacent_root.right != null && visited.getVertex(visited.root,adjacent_root.right.vertexId) == null) {
+			if (adjacent_root.right != null && visited.getVertex(visited.root, adjacent_root.right.vertexId) == null) {
 				DFSFunction(adjacent_root.right.vertexId, visited);
 			}
-			if (adjacent_root.left != null && visited.getVertex(visited.root,adjacent_root.left.vertexId) == null) {
+			if (adjacent_root.left != null && visited.getVertex(visited.root, adjacent_root.left.vertexId) == null) {
 				DFSFunction(adjacent_root.left.vertexId, visited);
 			}
 		}
@@ -136,11 +136,11 @@ public class Graph {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.getVertex(ds_dinh.root, v1);
 				v.adjacencyList.root = v.adjacencyList.insert(v.adjacencyList.root, dst);
-				if (ds_dinh.getVertex(ds_dinh.root, v2) == null) {
-					v = new Vertex(v2);
-					ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
-					so_dinh++;
-				}
+			}
+			if (ds_dinh.getVertex(ds_dinh.root, v2) == null) {
+				dst = new Vertex(v2);
+				ds_dinh.root = ds_dinh.insert(ds_dinh.root, dst);
+				so_dinh++;
 			}
 
 		} else if ("undirected".equals(type)) {
@@ -159,7 +159,7 @@ public class Graph {
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();//currentLine has format: "v1 v2"
-			while (currentLine != null && so_canh < 10000) {
+			while (currentLine != null && so_canh < 100000) {
 				if (!"".equals(currentLine)) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
