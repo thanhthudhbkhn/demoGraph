@@ -39,16 +39,17 @@ public class Graph {
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.get(vertexId);
-			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				// If a adjacent has not been visited, then mark it
-				// visited and enqueue it    
-				if (visited.get(adjacentVertex) == false) {
-					visited.set(adjacentVertex, true);
-					queue.add(adjacentVertex);
+
+			Enumeration adjacencyList_data = vertex.adjacencyList.keys();
+			while (adjacencyList_data.hasMoreElements()) {
+				Vertex adjacentVertex = vertex.adjacencyList.get(adjacencyList_data.nextElement());
+				if (visited.get(adjacentVertex.vertexId) == false) {
+					visited.set(adjacentVertex.vertexId, true);
+					queue.add(adjacentVertex.vertexId);
 				}
 			}
 		}
+//		System.out.println("");
 		return true;
 	}
 
@@ -59,11 +60,12 @@ public class Graph {
 
 		// Get all adjacent vertices of the vertex 
 		Vertex vertex = ds_dinh.get(vertexId);
-		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-			int adjacentVertex = vertex.adjacencyList.get(i);
-			// If a adjacent has not been visited, visit it with DFS
-			if (visited.get(adjacentVertex) == false) {
-				DFSFunction(adjacentVertex, visited);
+
+		Enumeration adjacencyList_data = vertex.adjacencyList.keys();
+		while (adjacencyList_data.hasMoreElements()) {
+			Vertex adjacentVertex = vertex.adjacencyList.get(adjacencyList_data.nextElement());
+			if (visited.get(adjacentVertex.vertexId) == false) {
+				DFSFunction(adjacentVertex.vertexId, visited);
 			}
 		}
 	}
@@ -83,8 +85,13 @@ public class Graph {
 		Enumeration data = ds_dinh.keys();
 		while (data.hasMoreElements()) {
 			Vertex v = ds_dinh.get(data.nextElement());
-			System.out.println(v.vertexId + " " + v.adjacencyList);
+			System.out.print("\n" + v.vertexId + ":");
 
+			Enumeration adjacencyList_data = v.adjacencyList.keys();
+			while (adjacencyList_data.hasMoreElements()) {
+				Vertex adj = v.adjacencyList.get(adjacencyList_data.nextElement());
+				System.out.print(adj.vertexId + " ");
+			}
 		}
 	}
 
@@ -113,18 +120,22 @@ public class Graph {
 	public void addEdge(String type, int v1, int v2) {
 		if ("directed".equals(type)) {
 			//if there are not vertex v1, create new vertex before add edge
+			Vertex dst;
+			if (ds_dinh.containsKey(v2) == false) {
+				dst = new Vertex(v2);
+				addVertex(dst);
+			} else {
+				dst = ds_dinh.get(v2);
+			}
 			if (ds_dinh.containsKey(v1) == false) {
 				Vertex v = new Vertex(v1);
-				v.adjacencyList.add(v2);
+				v.adjacencyList.put(v2, dst);
 				addVertex(v);
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.get(v1);
-				v.adjacencyList.add(v2);
-				if (ds_dinh.containsKey(v2) == false) {
-					v = new Vertex(v2);
-					addVertex(v);
-				}
+				v.adjacencyList.put(v2, dst);
+
 			}
 		} else if ("undirected".equals(type)) {
 			addEdge("directed", v1, v2);
@@ -169,7 +180,7 @@ public class Graph {
 //		addEdge("undirected", 4, 2);
 //		so_canh++;
 //		addEdge("undirected", 5, 2);
-//		so_canh++; 
+//		so_canh++;
 //		displayGraph();
 
 		return ds_dinh;
@@ -216,19 +227,17 @@ public class Graph {
 			// If a adjacent has not been visited, then mark it
 			// visited and enqueue it            
 			Vertex vertex = ds_dinh.get(vertex1);
-			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				if (visited.get(adjacentVertex) == false) {
-					visited.set(adjacentVertex, true);
-					//If this vertex is the destination return true
-					if (adjacentVertex == vertex2) {
-						path[adjacentVertex] = vertex1;
+			Enumeration adjacencyList_data = vertex.adjacencyList.keys();
+			while (adjacencyList_data.hasMoreElements()) {
+				Vertex adjacentVertex = vertex.adjacencyList.get(adjacencyList_data.nextElement());
+				if (visited.get(adjacentVertex.vertexId) == false) {
+					visited.set(adjacentVertex.vertexId, true);
+					path[adjacentVertex.vertexId] = vertex1;
+					if (adjacentVertex.vertexId == vertex2) {
 						displayPath(path, start, vertex2);
 						return true;
 					}
-					//Else continue BFS
-					queue.add(adjacentVertex);
-					path[adjacentVertex] = vertex1;
+					queue.add(adjacentVertex.vertexId);
 				}
 			}
 		}

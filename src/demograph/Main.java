@@ -68,7 +68,6 @@ public class Main {
 						if (g.DFS(v.vertexId) == false) {
 							System.out.println("Deepth First Traversal failed with vertex ." + v);
 						}
-//						System.out.println("");
 					}
 					runTime = (System.nanoTime() - start) / 1000000f;
 					System.out.println("");

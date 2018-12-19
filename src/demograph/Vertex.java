@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Vertex {
     int vertexId;
-    List<Integer> adjacencyList = new LinkedList();
+    Hashtable<Integer, Vertex> adjacencyList = new Hashtable<Integer, Vertex>();
 
     public Vertex(int vertexId) {
         this.vertexId = vertexId;
@@ -23,7 +23,7 @@ public class Vertex {
         return vertexId;
     }
 
-    public List<Integer> getAdjacencyList() {
+    public Hashtable<Integer, Vertex> getAdjacencyList() {
         return adjacencyList;
     }
     
