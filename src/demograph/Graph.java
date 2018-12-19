@@ -24,7 +24,7 @@ public class Graph {
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
@@ -76,7 +76,7 @@ public class Graph {
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		DFSFunction(vertexId, visited);
 		return true;
 	}
@@ -106,7 +106,7 @@ public class Graph {
 		//get 2 vertexs from an line "v1 v2"
 		int[] result = new int[2];
 		//String[] vertices = {v1,v2}
-		String[] vertices = str.split(" ");
+		String[] vertices = str.split("\t");
 		//Convert from string into integer
 		result[0] = Integer.parseInt(vertices[0]);
 		result[1] = Integer.parseInt(vertices[1]);
@@ -156,9 +156,14 @@ public class Graph {
 	public Hashtable createGraph() throws FileNotFoundException, IOException {
 		//define path for open file with shorter address
 		String path = "D:/gradute/demoGraph/src";
-		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
-			String currentLine = in.readLine(); //currentLine has format: "v1 v2"
-			while (currentLine != null) {
+//		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(path + "/roadNet/roadNet-PA.txt"))) {
+			String currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();//currentLine has format: "v1\tv2"
+			while (currentLine != null && so_canh < 10000) {
 				if (!"".equals(currentLine)) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
