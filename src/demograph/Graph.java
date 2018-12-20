@@ -24,7 +24,7 @@ public class Graph {
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
@@ -39,7 +39,8 @@ public class Graph {
 
 			// Get all adjacent vertices of the dequeued vertex 
 			Vertex vertex = ds_dinh.get(vertexId);
-			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
+			int adjacentSize = vertex.adjacencyList.size();
+			for (int i = 0; i < adjacentSize; i++) {
 				int adjacentVertex = vertex.adjacencyList.get(i);
 				// If a adjacent has not been visited, then mark it
 				// visited and enqueue it    
@@ -52,30 +53,41 @@ public class Graph {
 		return true;
 	}
 
-	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
-		// Mark the current node as visited and enqueue it
-		visited.set(vertexId, true);
-//        System.out.print(vertexId + " ");
-
-		// Get all adjacent vertices of the vertex 
-		Vertex vertex = ds_dinh.get(vertexId);
-		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-			int adjacentVertex = vertex.adjacencyList.get(i);
-			// If a adjacent has not been visited, visit it with DFS
-			if (visited.get(adjacentVertex) == false) {
-				DFSFunction(adjacentVertex, visited);
-			}
-		}
-	}
-
 	public boolean DFS(int vertexId) {
 		if (ds_dinh.containsKey(vertexId) == false) {
 			return false;
 		}
 		// Mark all the vertices as not visited(By default
 		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
-		DFSFunction(vertexId, visited);
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
+		// Create a stack for DFS
+		Stack<Integer> stack = new Stack<>();
+
+		// Mark the current node as visited and push it to stack
+		stack.push(vertexId);
+		int adjacentSize;
+		while (!stack.isEmpty()) {
+			// Pop a vertex from stack and print it
+
+			vertexId = stack.peek();
+			stack.pop();
+
+			if (visited.get(vertexId) == false) {
+//				System.out.print(vertexId + " ");
+				visited.set(vertexId, true);
+			}
+			// Get all adjacent vertices of the dequeued vertex 
+			Vertex vertex = ds_dinh.get(vertexId);
+			adjacentSize = vertex.adjacencyList.size();
+			for (int i = 0; i < adjacentSize; i++) {
+				int adjacentVertex = vertex.adjacencyList.get(i);
+				// If a adjacent has not been visited, then mark it
+				// visited and push it to stack
+				if (visited.get(adjacentVertex) == false) {
+					stack.push(adjacentVertex);
+				}
+			}
+		}
 		return true;
 	}
 
@@ -99,7 +111,7 @@ public class Graph {
 		//get 2 vertexs from an line "v1 v2"
 		int[] result = new int[2];
 		//String[] vertices = {v1,v2}
-		String[] vertices = str.split(" ");
+		String[] vertices = str.split("\t");
 		//Convert from string into integer
 		result[0] = Integer.parseInt(vertices[0]);
 		result[1] = Integer.parseInt(vertices[1]);
@@ -121,10 +133,10 @@ public class Graph {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.get(v1);
 				v.adjacencyList.add(v2);
-				if (ds_dinh.containsKey(v2) == false) {
-					v = new Vertex(v2);
-					addVertex(v);
-				}
+			}
+			if (ds_dinh.containsKey(v2) == false) {
+				Vertex v = new Vertex(v2);
+				addVertex(v);
 			}
 		} else if ("undirected".equals(type)) {
 			addEdge("directed", v1, v2);
@@ -145,14 +157,19 @@ public class Graph {
 	public Hashtable createGraph() throws FileNotFoundException, IOException {
 		//define path for open file with shorter address
 		String path = "D:/gradute/demoGraph/src";
-		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
-			String currentLine = in.readLine(); //currentLine has format: "v1 v2"
+//		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(path + "/roadNet/roadNet-PA.txt"))) {
+			String currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();//currentLine has format: "v1\tv2"
 			while (currentLine != null) {
-				if (!"".equals(currentLine)) {
+				if (!"".equals(currentLine) && so_canh < 300000) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
-					addEdge("undirected", vertex1, vertex2);
+					addEdge("directed", vertex1, vertex2);
 					so_canh++;
 				}
 				currentLine = in.readLine();
@@ -169,7 +186,7 @@ public class Graph {
 //		addEdge("undirected", 4, 2);
 //		so_canh++;
 //		addEdge("undirected", 5, 2);
-//		so_canh++; 
+//		so_canh++;
 //		displayGraph();
 
 		return ds_dinh;

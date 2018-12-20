@@ -53,7 +53,7 @@ public class Main {
 					while (data.hasMoreElements()) {
 						Vertex v = g.ds_dinh.get(data.nextElement());
 						if (g.BFS(v.vertexId) == false) {
-							System.out.println("Breadth First Traversal failed with vertex ." + v);
+							System.out.println("Breadth First Traversal failed with vertex ." + v.vertexId);
 						}
 					}
 					runTime = (System.nanoTime() - start) / 1000000f;
@@ -65,8 +65,11 @@ public class Main {
 					data = g.ds_dinh.keys();
 					while (data.hasMoreElements()) {
 						Vertex v = g.ds_dinh.get(data.nextElement());
+//						System.out.println(v.vertexId);
+						//982091 20178
 						if (g.DFS(v.vertexId) == false) {
-							System.out.println("Deepth First Traversal failed with vertex ." + v);
+							System.out.println("Deepth First Traversal failed with vertex ." + v.vertexId);
+//							System.out.println("false");
 						}
 //						System.out.println("");
 					}
