@@ -24,7 +24,7 @@ public class Graph {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
@@ -53,31 +53,43 @@ public class Graph {
 //		System.out.println("");
 		return true;
 	}
-//
 
-	public void DFSFunction(int vertexId, ArrayList<Boolean> visited) {
-		// Mark the current node as visited and enqueue it
-		visited.set(vertexId,true);
-//        System.out.print(vertexId + " ");
-
-		// Get all adjacent vertices of the vertex
-		Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
-		for (int i = 0; i < vertex.adjacencyList.size(); i++) {
-			int adjacentVertex = vertex.adjacencyList.get(i);
-			// If a adjacent has not been visited, visit it with DFS
-			if (visited.get(adjacentVertex) == false) {
-				DFSFunction(adjacentVertex, visited);
-			}
-		}
-	}
-
+	//return true if DFS is successful
 	public boolean DFS(int vertexId) {
 		if (ds_dinh.getVertex(ds_dinh.root, vertexId) == null) {
 			return false;
 		}
 		// Create a list contain the visited vertices
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
-		DFSFunction(vertexId, visited);
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
+
+		// Create a queue for BFS
+		Stack<Integer> stack = new Stack<>();
+
+		// Mark the current node as visited and enqueue it
+		stack.push(vertexId);
+		int adjacentSize;
+		
+		while (!stack.isEmpty()) {
+			vertexId = stack.peek();
+			stack.pop();
+
+			if (visited.get(vertexId) == false) {
+//				System.out.print(vertexId + " ");
+				visited.set(vertexId, true);
+			}
+			// Get all adjacent vertices of the dequeued vertex 
+			Vertex vertex = ds_dinh.getVertex(ds_dinh.root, vertexId);
+			adjacentSize = vertex.adjacencyList.size();
+			for (int i = 0; i < adjacentSize; i++) {
+				int adjacentVertex = vertex.adjacencyList.get(i);
+				// If a adjacent has not been visited, then mark it
+				// visited and enqueue it    
+				if (visited.get(adjacentVertex) == false) {
+					stack.push(adjacentVertex);
+				}
+			}
+		}
+//		System.out.println("");
 		return true;
 	}
 
@@ -88,7 +100,6 @@ public class Graph {
 			displayGraph(root.right);
 		}
 	}
-//    
 
 	public void displayGraphInfo() {
 		System.out.println("There are:");
@@ -101,7 +112,7 @@ public class Graph {
 		//get 2 vertexs from an line "v1 v2"
 		int[] result = new int[2];
 		//String[] vertices = {v1,v2}
-		String[] vertices = str.split(" ");
+		String[] vertices = str.split("\t");
 		//Convert from string into integer
 		result[0] = Integer.parseInt(vertices[0]);
 		result[1] = Integer.parseInt(vertices[1]);
@@ -136,10 +147,15 @@ public class Graph {
 	public AVLTree createGraph() throws FileNotFoundException, IOException {
 		//define path for open file with shorter address
 		String path = "D:/gradute/demoGraph/src";
-		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
-			String currentLine = in.readLine(); //currentLine has format: "v1 v2"
+//		try (BufferedReader in = new BufferedReader(new FileReader(path + "/facebook/facebook_combined.txt"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(path + "/roadNet/roadNet-PA.txt"))) {
+			String currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();
+			currentLine = in.readLine();//currentLine has format: "v1\tv2"
 			while (currentLine != null) {
-				if (!"".equals(currentLine)) {
+				if (!"".equals(currentLine) && so_canh < 100000) {
 					int vertex1 = getVerticesFromString(currentLine)[0];
 					int vertex2 = getVerticesFromString(currentLine)[1];
 					//add 2 vertices into lists
@@ -189,13 +205,13 @@ public class Graph {
 		//else
 		int start = vertex1;
 		// Create a list contain the visited vertices
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000, false));
+		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(2000000, false));
 		int[] path = new int[10000]; //do lon cua mang phai > chi so lon nhat cua dinh
 		// Create a queue for BFS
 		LinkedList<Integer> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
-		visited.set(vertex1,true);
+		visited.set(vertex1, true);
 		queue.add(vertex1);
 
 		while (!queue.isEmpty()) {
@@ -209,7 +225,7 @@ public class Graph {
 			for (int i = 0; i < vertex.adjacencyList.size(); i++) {
 				int adjacentVertex = vertex.adjacencyList.get(i);
 				if (visited.get(adjacentVertex) == false) {
-					visited.set(adjacentVertex,true);
+					visited.set(adjacentVertex, true);
 					//If this vertex is the destination return true
 					if (adjacentVertex == vertex2) {
 						path[adjacentVertex] = vertex1;
