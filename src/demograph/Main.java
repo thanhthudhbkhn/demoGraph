@@ -69,6 +69,7 @@ public class Main {
 				case 3:
 					int v = 0;
 					start = System.nanoTime();
+//					g.displayGraph();
 					BFSrun(g, g.ds_dinh.root);
 //					g.BFS(1);
 					runTime = (System.nanoTime() - start) / 1000000f;
