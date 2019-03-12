@@ -29,9 +29,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-//		loadGraph("/roadNet/roadNet-CA.txt");
-//		loadGraph("/roadNet/roadNet-TX.txt");
-//		loadGraph("/roadNet/roadNet-PA.txt");
+		loadGraph("/roadNet/roadNet-CA.txt");
+		loadGraph("/roadNet/roadNet-TX.txt");
+		loadGraph("/roadNet/roadNet-PA.txt");
 
 	}
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class Vertex {
 
 	int vertexId, height;
+	int deg;
     List<Integer> adjacencyList = new LinkedList();
 	Vertex left;
 	Vertex right;

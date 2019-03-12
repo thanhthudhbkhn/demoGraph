@@ -19,7 +19,7 @@ public class Graph {
 
 	public void displayGraph(Vertex root) {
 		if (root != null) {
-			System.out.println(root.vertexId + " " + root.adjacencyList);
+			System.out.println(root.vertexId + "-" + root.deg + " " + root.adjacencyList);
 			displayGraph(root.left);
 			displayGraph(root.right);
 		}
@@ -47,12 +47,14 @@ public class Graph {
 			if (ds_dinh.getVertex(ds_dinh.root, v1) == null) {
 				Vertex v = new Vertex(v1);
 				v.adjacencyList.add(v2);
+				v.deg++;
 				ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
 				so_dinh++;
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				Vertex v = ds_dinh.getVertex(ds_dinh.root, v1);
 				v.adjacencyList.add(v2);
+				v.deg++;
 				if (ds_dinh.getVertex(ds_dinh.root, v2) == null) {
 					v = new Vertex(v2);
 					ds_dinh.root = ds_dinh.insert(ds_dinh.root, v);
