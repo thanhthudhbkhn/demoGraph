@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*			
+ * To change this license header, choose License Headers in Project Properties.			
+ * To change this template file, choose Tools | Templates			
+ * and open the template in the editor.			
  */
 package demograph;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Scanner;
 
 /**
  *
@@ -15,71 +13,24 @@ import java.util.Scanner;
  */
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	private static void loadGraph(String file) throws IOException {
 		Graph g = new Graph();
-		g.createGraph();
+		String filename = file.split("/")[2];
+		String graphname = filename.split(".txt")[0];
 
-		int choice = 0;
-		do {
-			System.out.println("-----------------------------------------");
-			System.out.println("Press 1 to display graph info.");
-			System.out.println("Press 2 find path between 2 vertices.");
-			System.out.println("Press 3 to start Breadth First Traversal.");
-			System.out.println("Press 4 to start Deepth First Traversal.");
-			System.out.println("-----------------------------------------");
+		long start = System.nanoTime();
+		g.createGraph(file);
+		float runTime = (System.nanoTime() - start) / 1000000f;
 
-			Scanner scn = new Scanner(System.in);
-			choice = scn.nextInt();
+		System.out.println("\nIt takes " + runTime + "ms to load " + filename + " into graph.");
+		System.out.println(graphname + ":");
+		g.displayGraphInfo();
+	}
 
-			switch (choice) {
-				case 1:
-					g.displayGraphInfo();
-					break;
-				case 2:
-					System.out.println("Enter 2 vertices: ");
-					int v1 = scn.nextInt();
-					int v2 = scn.nextInt();
-					long start = System.nanoTime();
-					if (g.findPath(v1, v2) == false) {
-						System.out.println("There is not any paths from " + v1 + " to " + v2 + ".");
-					}
-					float runTime = (System.nanoTime() - start) / 1000000f;
-					System.out.println("");
-					System.out.println("It takes " + runTime + "ms to find path.");
-					break;
-				case 3:
-					start = System.nanoTime();
-					Enumeration data = g.ds_dinh.keys();
-					while (data.hasMoreElements()) {
-						Vertex v = g.ds_dinh.get(data.nextElement());
-						if (g.BFS(v.vertexId) == false) {
-							System.out.println("Breadth First Traversal failed with vertex ." + v.vertexId);
-						}
-					}
-					runTime = (System.nanoTime() - start) / 1000000f;
-					System.out.println("");
-					System.out.println("It takes " + runTime + "ms to run BFS.");
-					break;
-				case 4:
-					start = System.nanoTime();
-					data = g.ds_dinh.keys();
-					while (data.hasMoreElements()) {
-						Vertex v = g.ds_dinh.get(data.nextElement());
-//						System.out.println(v.vertexId);
-						//982091 20178
-						if (g.DFS(v.vertexId) == false) {
-							System.out.println("Deepth First Traversal failed with vertex ." + v.vertexId);
-//							System.out.println("false");
-						}
-//						System.out.println("");
-					}
-					runTime = (System.nanoTime() - start) / 1000000f;
-					System.out.println("");
-					System.out.println("It takes " + runTime + "ms to run DFS.");
-					break;
-				default:
-					break;
-			}
-		} while (choice == 1 || choice == 2 || choice == 3 || choice == 4);
+	public static void main(String[] args) throws IOException {
+
+//		loadGraph("/roadNet/roadNet-CA.txt");	
+//		loadGraph("/roadNet/roadNet-TX.txt");	
+		loadGraph("/roadNet/roadNet-PA.txt");	
 	}
 }
