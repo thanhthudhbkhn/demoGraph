@@ -13,6 +13,7 @@ import java.util.*;
  */
 public class Vertex {
     int vertexId;
+	int deg;
     List<Integer> adjacencyList = new LinkedList();
 
     public Vertex(int vertexId) {
