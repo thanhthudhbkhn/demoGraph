@@ -21,14 +21,14 @@ public class Vertex {
         this.vertexId = vertexId;
 		this.left = this;
 		this.right = this;
-		this.deg = 0;
+		this.deg = Integer.MAX_VALUE;
     }
 	
 	public Vertex(int vertexId, Vertex left, Vertex right) {
         this.vertexId = vertexId;
 		this.left = left;
 		this.right = right;
-		this.deg = 0;
+		this.deg = new Random().nextInt();
     }
 
     public int getVertexId() {
