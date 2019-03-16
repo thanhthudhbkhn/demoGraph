@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Vertex {
     int vertexId;
-	int priority;
+	int deg;
     List<Integer> adjacencyList = new LinkedList();
 	Vertex left, right;
 
@@ -21,14 +21,14 @@ public class Vertex {
         this.vertexId = vertexId;
 		this.left = this;
 		this.right = this;
-		this.priority = Integer.MAX_VALUE;
+		this.deg = 0;
     }
 	
 	public Vertex(int vertexId, Vertex left, Vertex right) {
         this.vertexId = vertexId;
 		this.left = left;
 		this.right = right;
-		this.priority = new Random().nextInt();
+		this.deg = 0;
     }
 
     public int getVertexId() {

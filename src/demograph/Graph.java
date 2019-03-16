@@ -18,87 +18,13 @@ public class Graph {
 	int so_canh = 0;
 //	int so_dinh = 0;
 
-	//return true if BFS is successful
-	public boolean BFS(int vertexId) {
-		if (ds_dinh.get(vertexId) == null) {
-			return false;
-		}
-		// Mark all the vertices as not visited(By default
-		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000000, false));
-		// Create a queue for BFS
-		LinkedList<Integer> queue = new LinkedList<>();
-
-		// Mark the current node as visited and enqueue it
-		visited.set(vertexId, true);
-		queue.add(vertexId);
-
-		while (!queue.isEmpty()) {
-			// Dequeue a vertex from queue and print it
-			vertexId = queue.poll();
-//			System.out.print(vertexId + " ");
-
-			// Get all adjacent vertices of the dequeued vertex 
-			Vertex vertex = getVertex(vertexId);
-			int adjListSize = vertex.adjacencyList.size();
-			for (int i = 0; i < adjListSize; i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				// If a adjacent has not been visited, then mark it
-				// visited and enqueue it    
-				if (visited.get(adjacentVertex) == false) {
-					visited.set(adjacentVertex, true);
-					queue.add(adjacentVertex);
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean DFS(int vertexId) {
-		if (ds_dinh.get(vertexId) == null) {
-			return false;
-		}
-		// Mark all the vertices as not visited(By default
-		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000000, false));
-		Stack<Integer> stack = new Stack<>();
-
-		// Mark the current node as visited and push to stack
-		stack.push(vertexId);
-		int adjacentSize;
-
-		while (!stack.isEmpty()) {
-			vertexId = stack.peek();
-			stack.pop();
-
-			if (visited.get(vertexId) == false) {
-//				System.out.print(vertexId + " ");
-				visited.set(vertexId, true);
-			}
-			// Get all adjacent vertices of the dequeued vertex 
-			Vertex vertex = ds_dinh.get(vertexId);
-			adjacentSize = vertex.adjacencyList.size();
-			for (int i = 0; i < adjacentSize; i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				// If a adjacent has not been visited, then mark it
-				// visited and enqueue it    
-				if (visited.get(adjacentVertex) == false) {
-					stack.push(adjacentVertex);
-				}
-			}
-		}
-		return true;
-	}
-
 	public void displayGraph() {
 		ds_dinh.preorder();
 	}
 
 	public void displayGraphInfo() {
-		System.out.println("There are:");
 		System.out.println(ds_dinh.countNodes() + " vertices");
-		System.out.println("and " + so_canh + " edges");
-		System.out.println("in this graph.");
+		System.out.println(so_canh + " edges");
 	}
 
 	public int[] getVerticesFromString(String str) {
@@ -145,30 +71,30 @@ public class Graph {
 		}
 	}
 
-	public TreapTree createGraph() throws FileNotFoundException, IOException {
+	public TreapTree createGraph(String file) throws FileNotFoundException, IOException {
 		//define path for open file with shorter address
 		String path = "D:/gradute/demoGraph/src";
-		try (BufferedReader in = new BufferedReader(new FileReader(path + "/roadNet/roadNet-CA.txt"))) {
+		try (BufferedReader in = new BufferedReader(new FileReader(path + file))) {
 			String currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();//currentLine has format: "v1 v2"
-			while (currentLine != null && so_canh < 10000) {
-				if (!"".equals(currentLine)) {
-					int vertex1 = getVerticesFromString(currentLine)[0];
-					int vertex2 = getVerticesFromString(currentLine)[1];
-					//add 2 vertices into lists
-					addEdge("directed", vertex1, vertex2);
-					so_canh++;
-				}
-				currentLine = in.readLine();
-			}
+//			while (currentLine != null && so_canh < 10000) {
+//				if (!"".equals(currentLine)) {
+//					int vertex1 = getVerticesFromString(currentLine)[0];
+//					int vertex2 = getVerticesFromString(currentLine)[1];
+//					//add 2 vertices into lists
+//					addEdge("directed", vertex1, vertex2);
+//					so_canh++;
+//				}
+//				currentLine = in.readLine();
+//			}
 		} //currentLine doc tu file, co dang "v1 v2"
-//		addEdge("directed", 1, 2);
-//		so_canh++;
-//		addEdge("directed", 1, 3);
-//		so_canh++;
+		addEdge("undirected", 1, 2);
+		so_canh++;
+		addEdge("undirected", 1, 3);
+		so_canh++;
 //		addEdge("directed", 1, 4);
 //		so_canh++;
 //		addEdge("directed", 1, 5);
@@ -178,69 +104,9 @@ public class Graph {
 //		addEdge("directed", 2, 5);
 //		so_canh++;
 
-//		ds_dinh.preorder();
+		ds_dinh.preorder();
 //so_dinh = ds_dinh.countNodes();
 		return ds_dinh;
 	}
 
-	public void displayPath(int path[], int vertex1, int vertex2) {
-//        int destination = vertex2;
-		System.out.print(vertex2);
-		do {
-			int step = path[vertex2];
-			vertex2 = step;
-			System.out.print(" <- " + vertex2);
-		} while (vertex2 != vertex1);
-	}
-
-	public boolean findPath(int vertex1, int vertex2) {
-		//if vertex1 or vertex2 are not existed in graph, return false
-		if (ds_dinh.get(vertex1) == null || ds_dinh.get(vertex2) == null) {
-			System.out.println("The vertex does not exist.");
-			return false;
-		}
-		// else if 2 vertices are the same, return true
-		if (vertex1 == vertex2) {
-			return true;
-		}
-		//else
-		int start = vertex1;
-		// Mark all the vertices as not visited(By default
-		// set as false)
-		ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(10000000, false));
-		int[] path = new int[10000000]; //do lon cua mang phai > chi so lon nhat cua dinh
-		// Create a queue for BFS
-		LinkedList<Integer> queue = new LinkedList<>();
-
-		// Mark the current node as visited and enqueue it
-		visited.set(vertex1, true);
-		queue.add(vertex1);
-
-		while (!queue.isEmpty()) {
-			// Dequeue a vertex from queue and print it
-			vertex1 = queue.poll();
-
-			// Get all adjacent vertices of the dequeued vertex 
-			// If a adjacent has not been visited, then mark it
-			// visited and enqueue it            
-			Vertex vertex = getVertex(vertex1);
-			int adjListSize = vertex.adjacencyList.size();
-			for (int i = 0; i < adjListSize; i++) {
-				int adjacentVertex = vertex.adjacencyList.get(i);
-				if (visited.get(adjacentVertex) == false) {
-					visited.set(adjacentVertex, true);
-					//If this vertex is the destination return true
-					if (adjacentVertex == vertex2) {
-						path[adjacentVertex] = vertex1;
-						displayPath(path, start, vertex2);
-						return true;
-					}
-					//Else continue BFS
-					queue.add(adjacentVertex);
-					path[adjacentVertex] = vertex1;
-				}
-			}
-		}
-		return false;
-	}
 }

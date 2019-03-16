@@ -47,7 +47,7 @@ public class TreapTree {
 			return new Vertex(X.vertexId, nil, nil);
 		} else if (X.vertexId < T.vertexId) {
 			T.left = insert(X, T.left);
-			if (T.left.priority < T.priority) {
+			if (T.left.deg < T.deg) {
 				Vertex L = T.left;
 				T.left = L.right;
 				L.right = T;
@@ -55,7 +55,7 @@ public class TreapTree {
 			}
 		} else if (X.vertexId > T.vertexId) {
 			T.right = insert(X, T.right);
-			if (T.right.priority < T.priority) {
+			if (T.right.deg < T.deg) {
 				Vertex R = T.right;
 				T.right = R.left;
 				R.left = T;
@@ -128,7 +128,7 @@ public class TreapTree {
 
 	private void preorder(Vertex r) {
 		if (r != nil) {
-			System.out.print(r.vertexId + " " + r.adjacencyList);
+			System.out.println(r.vertexId + "-" + r.deg + " " + r.adjacencyList);
 			preorder(r.left);
 			preorder(r.right);
 		}
