@@ -23,15 +23,15 @@ public class Main {
 		g.createGraph(file);
 		float runTime = (System.nanoTime() - start) / 1000000f;
 		
-//		System.out.println("\nIt takes " + runTime + "ms to load " + filename + " into graph.");
-//		System.out.println(graphname + ":");
-//		g.displayGraphInfo();
+		System.out.println("\nIt takes " + runTime + "ms to load " + filename + " into graph.");
+		System.out.println(graphname + ":");
+		g.displayGraphInfo();
 	}
 
 	public static void main(String[] args) throws IOException {
 
-		loadGraph("/roadNet/roadNet-CA.txt");
-		loadGraph("/roadNet/roadNet-TX.txt");
+//		loadGraph("/roadNet/roadNet-CA.txt");
+//		loadGraph("/roadNet/roadNet-TX.txt");
 		loadGraph("/roadNet/roadNet-PA.txt");
 
 	}

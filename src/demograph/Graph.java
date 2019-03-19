@@ -55,11 +55,14 @@ public class Graph {
 				v = new Vertex(v1);
 				addVertex(v);
 				ds_dinh.get(v1).adjacencyList.add(v2);
+				ds_dinh.get(v1).deg++;
 
 			} else {
 				//if vertex v1 is existed, get v1 and add v2 to v1's adjacency list
 				v = getVertex(v1);
 				v.adjacencyList.add(v2);
+				v.deg++;
+				ds_dinh.update(v);
 			}
 			if (ds_dinh.get(v2) == null) {
 				v = new Vertex(v2);
@@ -80,31 +83,30 @@ public class Graph {
 			currentLine = in.readLine();
 			currentLine = in.readLine();
 			currentLine = in.readLine();//currentLine has format: "v1 v2"
-//			while (currentLine != null && so_canh < 10000) {
-//				if (!"".equals(currentLine)) {
-//					int vertex1 = getVerticesFromString(currentLine)[0];
-//					int vertex2 = getVerticesFromString(currentLine)[1];
-//					//add 2 vertices into lists
-//					addEdge("directed", vertex1, vertex2);
-//					so_canh++;
-//				}
-//				currentLine = in.readLine();
-//			}
+			while (currentLine != null) {
+				if (!"".equals(currentLine)) {
+					int vertex1 = getVerticesFromString(currentLine)[0];
+					int vertex2 = getVerticesFromString(currentLine)[1];
+					//add 2 vertices into lists
+					addEdge("undirected", vertex1, vertex2);
+					so_canh++;
+				}
+				currentLine = in.readLine();
+			}
 		} //currentLine doc tu file, co dang "v1 v2"
-		addEdge("undirected", 1, 2);
-		so_canh++;
-		addEdge("undirected", 1, 3);
-		so_canh++;
-//		addEdge("directed", 1, 4);
+//		addEdge("undirected", 1, 3);
 //		so_canh++;
-//		addEdge("directed", 1, 5);
+//		addEdge("undirected", 1, 2);
 //		so_canh++;
-//		addEdge("directed", 2, 4);
+//		addEdge("undirected", 1, 5);
 //		so_canh++;
-//		addEdge("directed", 2, 5);
+//		addEdge("undirected", 1, 4);
 //		so_canh++;
-
-		ds_dinh.preorder();
+//		addEdge("undirected", 2, 4);
+//		so_canh++;
+//		addEdge("undirected", 2, 5);
+//		so_canh++;		
+//		displayGraph();
 //so_dinh = ds_dinh.countNodes();
 		return ds_dinh;
 	}

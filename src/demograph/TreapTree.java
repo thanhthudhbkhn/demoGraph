@@ -35,6 +35,44 @@ public class TreapTree {
 		root = nil;
 	}
 
+	public void update(Vertex T) {
+		if (T.left != nil && T.left.deg < T.deg) {
+			Vertex tmp = T.left;
+
+			Vertex T2 = new Vertex(T.vertexId);
+			T2.deg = T.deg;
+			T2.adjacencyList = T.adjacencyList;
+			T2.left = tmp.right;
+			T2.right = T.right;
+
+			T.vertexId = tmp.vertexId;
+			T.deg = tmp.deg;
+			T.adjacencyList = tmp.adjacencyList;
+			T.left = tmp.left;
+			T.right = T2;
+
+			update(T2);
+		}
+
+		if (T.right != nil && T.right.deg < T.deg) {
+			Vertex tmp = T.right;
+
+			Vertex T2 = new Vertex(T.vertexId);
+			T2.deg = T.deg;
+			T2.adjacencyList = T.adjacencyList;
+			T2.right = tmp.left;
+			T2.left = T.left;
+
+			T.vertexId = tmp.vertexId;
+			T.deg = tmp.deg;
+			T.adjacencyList = tmp.adjacencyList;
+			T.right = tmp.right;
+			T.left = T2;
+
+			update(T2);
+		}
+	}
+
 	/**
 	 * Functions to insert data *
 	 */
@@ -128,8 +166,10 @@ public class TreapTree {
 
 	private void preorder(Vertex r) {
 		if (r != nil) {
-			System.out.println(r.vertexId + "-" + r.deg + " " + r.adjacencyList);
+			System.out.println(r.vertexId + "-" + r.deg);// + " " + r.adjacencyList);
+			System.out.print("left: ");
 			preorder(r.left);
+			System.out.print("right: ");
 			preorder(r.right);
 		}
 	}
