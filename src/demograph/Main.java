@@ -32,18 +32,21 @@ public class Main {
     private static void findHighestDegree(Graph g) {
         long start = System.nanoTime();
         float max = 0;
-        for (int i = 0; i < g.ds_dinh.countNodes() / 10000; i++) {
+        int originalSize = g.ds_dinh.countNodes();
+        for (int i = 0; i < originalSize; i++) {
+//            System.out.println("xoa "+g.ds_dinh.root.vertexId);
             g.deleteVertex(g.ds_dinh.root);
+//            g.displayGraph();
             float newdeg = g.getDegree();
-            System.out.println(g.ds_dinh.countNodes() + " " + newdeg);
+//            System.out.println("\nso dinh do thi con:"+ g.ds_dinh.countNodes() + " " + newdeg);
             if (max < newdeg) {
                 max = newdeg;
             }
         }
 
         float runTime = (System.nanoTime() - start) / 1000000f;
-        System.out.println(max);
-        System.out.println("\nIt takes " + runTime + "ms to find highest degree of graph.");
+        System.out.println("Highest degree: " + max);
+        System.out.println("It takes " + runTime + "ms to find highest density of graph.");
     }
 
     public static void main(String[] args) throws IOException {

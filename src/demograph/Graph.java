@@ -52,8 +52,17 @@ public class Graph {
         int n = vertex.adjacencyList.size();
         for (int i = 0; i < n; i++) {
             Vertex v = getVertex(vertex.adjacencyList.get(i));
-            v.deg--;
-            v.adjacencyList.remove(v.adjacencyList.indexOf(vertex.vertexId));//WARNINGNGNNGNGNGNGSNGS RAT LAUUUUU
+            if (v != null) {
+                v.deg--;
+                ds_dinh.update(v);
+//                int m = v.adjacencyList.size();
+//            for (int j = 0; j < m; i++) {
+//                if (v.adjacencyList.get(j) == vertex.vertexId) {
+//                    v.adjacencyList.remove(j);
+//                }
+//            }
+//            v.adjacencyList.remove(v.adjacencyList.indexOf(vertex.vertexId));//WARNINGNGNNGNGNGNGSNGS RAT LAUUUUU
+            }
         }
         ds_dinh.delete(vertex);
     }
@@ -127,6 +136,8 @@ public class Graph {
 //        addEdge("undirected", 7, 8);
 //        so_canh++;
 //        addEdge("undirected", 7, 1);
+//        so_canh++;
+//        addEdge("undirected", 7, 4);
 //        so_canh++;
 //        displayGraph();
 

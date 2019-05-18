@@ -35,7 +35,7 @@ public class TreapTree {
         root = nil;
     }
 
-    public void update(Vertex T) {
+    public void update(Vertex T) {//update T when T's deg ++
         if (T.left != nil && T.left.deg < T.deg) {
             Vertex tmp = T.left;
 
