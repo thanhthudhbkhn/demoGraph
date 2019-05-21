@@ -54,22 +54,15 @@ public class Graph {
             Vertex v = getVertex(vertex.adjacencyList.get(i));
             if (v != null) {
                 v.deg--;
-                ds_dinh.update(v);
-//                int m = v.adjacencyList.size();
-//            for (int j = 0; j < m; i++) {
-//                if (v.adjacencyList.get(j) == vertex.vertexId) {
-//                    v.adjacencyList.remove(j);
-//                }
-//            }
-//            v.adjacencyList.remove(v.adjacencyList.indexOf(vertex.vertexId));//WARNINGNGNNGNGNGNGSNGS RAT LAUUUUU
+//                ds_dinh.update(v);
             }
         }
         ds_dinh.delete(vertex);
     }
 
-    public float getDegree() {
-        float degree = (float) so_canh / ds_dinh.countNodes();
-        return degree;
+    public float getDensity() {
+        float density = (float) so_canh / ds_dinh.countNodes();
+        return density;
     }
 
     public void addEdge(String type, int v1, int v2) {
