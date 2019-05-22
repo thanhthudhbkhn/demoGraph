@@ -120,8 +120,7 @@ public class TreapTree {
             T.left = delete(X, T.left);
         } else if (X.vertexId > T.vertexId) {
             T.right = delete(X, T.right);
-        } 
-        // IF KEY IS AT ROOT 
+        } // IF KEY IS AT ROOT 
         // If left is NULL 
         else if (T.left == nil) {
             Vertex temp = T.right;
@@ -142,63 +141,9 @@ public class TreapTree {
             R.left = T;
             return delete(X, R);
         }
-        //------------------------------------------------------------
-//        if (X.vertexId < T.vertexId) {
-//            T.left = insert(X, T.left);
-//            if (T.left.deg < T.deg) {
-//                Vertex L = T.left;
-//                T.left = L.right;
-//                L.right = T;
-//                return L;
-//            }
-//        } else if (X.vertexId > T.vertexId) {
-//            T.right = insert(X, T.right);
-//            if (T.right.deg < T.deg) {
-//                Vertex R = T.right;
-//                T.right = R.left;
-//                R.left = T;
-//                return R;
-//            }
-//        }
         return T;
     }
 
-    public Vertex deleteNode(Vertex root, Vertex X) {
-        // Base case 
-        if (root == nil) {
-            return root;
-        }
-
-        // IF KEYS IS NOT AT ROOT 
-        if (X.vertexId < root.vertexId) {
-            root.left = deleteNode(root.left, X);
-        } else if (X.vertexId > root.vertexId) {
-            root.right = deleteNode(root.right, X);
-        } // IF KEY IS AT ROOT 
-        // If left is NULL 
-        else if (root.left == nil) {
-            Vertex temp = root.right;
-            root = temp;  // Make right child as root 
-        } // If Right is NULL 
-        else if (root.right == nil) {
-            Vertex temp = root.left;
-            root = temp;  // Make left child as root 
-        } // If ksy is at root and both left and right are not NULL 
-        else if (root.left.deg < root.right.deg) {
-            System.out.println("con ben trai bac thap hon");
-//            root = leftRotate(root);
-//            root.left = deleteNode(root.left, X);
-        } else {
-            System.out.println("con ben phai bac thap hon");
-//            root = rightRotate(root);
-            Vertex R = X.right;
-            X.right = R.left;
-            R.left = X;
-            root.right = deleteNode(root.right, X);
-        }
-
-        return root;
-    }
 
     /**
      * Functions to count number of nodes *

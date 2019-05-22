@@ -12,21 +12,22 @@ import java.util.*;
  * @author thanhthu
  */
 public class Vertex {
+
     int vertexId;
-	int deg;
+    int deg;
     List<Integer> adjacencyList = new LinkedList();
-	Vertex left, right;
+    Vertex left, right;
 
     public Vertex(int vertexId) {
         this.vertexId = vertexId;
-		this.left = this;
-		this.right = this;
+        this.left = this;
+        this.right = this;
     }
-	
-	public Vertex(int vertexId, Vertex left, Vertex right) {
+
+    public Vertex(int vertexId, Vertex left, Vertex right) {
         this.vertexId = vertexId;
-		this.left = left;
-		this.right = right;
+        this.left = left;
+        this.right = right;
     }
 
     public int getVertexId() {
@@ -36,5 +37,5 @@ public class Vertex {
     public List<Integer> getAdjacencyList() {
         return adjacencyList;
     }
-    
+
 }

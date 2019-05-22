@@ -29,14 +29,13 @@ public class Main {
         return g;
     }
 
-    private static void findHighestDegree(Graph g) {
+    private static void findHighestDensity(Graph g) {
         long start = System.nanoTime();
         float max = 0;
         int get = 0;
         int originalSize = g.ds_dinh.countNodes();
         for (int i = 0; i < originalSize; i++) {
             float newDen = g.getDensity();
-            if (i>5700 && i<6050) System.out.println(g.ds_dinh.countNodes() + " " + newDen);
             if (max < newDen) {
                 max = newDen;
                 get = g.ds_dinh.countNodes();
@@ -45,7 +44,7 @@ public class Main {
         }
 
         float runTime = (System.nanoTime() - start) / 1000000f;
-        System.out.println("Highest degree: " + max + " " + get);
+        System.out.println("Highest density: " + max + " " + get);
         System.out.println("It takes " + runTime + "ms to find highest density of graph.");
     }
 
@@ -54,7 +53,7 @@ public class Main {
 //		loadGraph("/roadNet/roadNet-CA.txt");
 //		loadGraph("/roadNet/roadNet-TX.txt");
         Graph g = loadGraph("/roadNet/roadNet-PA.txt");
-//        findHighestDegree(g);
+        findHighestDensity(g);
 
     }
 }
