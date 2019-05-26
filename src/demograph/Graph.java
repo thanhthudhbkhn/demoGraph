@@ -54,7 +54,7 @@ public class Graph {
             Vertex v = getVertex(vertex.adjacencyList.get(i));
             if (v != null) {
                 v.deg--;
-//                ds_dinh.update(v);
+                ds_dinh.update(v);
             }
         }
         ds_dinh.delete(vertex);
