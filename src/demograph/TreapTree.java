@@ -115,17 +115,18 @@ public class TreapTree {
         if (T == nil) {
             return nil;
         }
-        // IF KEYS IS NOT AT ROOT THEN CONTINUE
+        // IF KEYS IS NOT AT ROOT THEN FIND KEY
         if (X.vertexId < T.vertexId) {
             T.left = delete(X, T.left);
         } else if (X.vertexId > T.vertexId) {
             T.right = delete(X, T.right);
-        } // IF KEY IS AT ROOT 
-        // If left is NULL 
+        } 
+        // IF KEY IS AT ROOT 
+        // If left child is NULL 
         else if (T.left == nil) {
             Vertex temp = T.right;
             T = temp;  // Make right child as root 
-        } // If Right is NULL 
+        } // If Right child is NULL 
         else if (T.right == nil) {
             Vertex temp = T.left;
             T = temp;  // Make left child as root 

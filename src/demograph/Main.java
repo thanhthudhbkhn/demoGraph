@@ -34,13 +34,15 @@ public class Main {
         float max = 0;
         int get = 0;
         int originalSize = g.ds_dinh.countNodes();
-        for (int i = 0; i < originalSize; i++) {
+        for (int i = 0; i < 100000; i++) {
+//            g.displayGraph();
             float newDen = g.getDensity();
             if (max < newDen) {
                 max = newDen;
                 get = g.ds_dinh.countNodes();
             }
             g.deleteVertex(g.ds_dinh.root);
+            System.out.println(g.ds_dinh.root.deg);
         }
 
         float runTime = (System.nanoTime() - start) / 1000000f;
@@ -53,7 +55,7 @@ public class Main {
 //		loadGraph("/roadNet/roadNet-CA.txt");
 //		loadGraph("/roadNet/roadNet-TX.txt");
         Graph g = loadGraph("/roadNet/roadNet-PA.txt");
-        findHighestDensity(g);
+//        findHighestDensity(g);
 
     }
 }

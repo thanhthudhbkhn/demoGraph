@@ -49,7 +49,7 @@ public class Graph {
 
     public void deleteVertex(Vertex vertex) {
         so_canh = so_canh - vertex.deg;
-        int n = vertex.adjacencyList.size();
+        int n = vertex.deg;
         for (int i = 0; i < n; i++) {
             Vertex v = getVertex(vertex.adjacencyList.get(i));
             if (v != null) {
@@ -106,7 +106,7 @@ public class Graph {
                     int vertex1 = getVerticesFromString(currentLine)[0];
                     int vertex2 = getVerticesFromString(currentLine)[1];
                     //add 2 vertices into lists
-                    addEdge("undirected", vertex1, vertex2);
+                    addEdge("directed", vertex1, vertex2);
                     so_canh++;
                 }
                 currentLine = in.readLine();
