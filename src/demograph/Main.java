@@ -51,10 +51,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-//		loadGraph("/roadNet/roadNet-CA.txt");
-//		loadGraph("/roadNet/roadNet-TX.txt");
+		Graph g = loadGraph("/roadNet/roadNet-CA.txt");
+        findHighestDegree(g);
+		Graph g = loadGraph("/roadNet/roadNet-TX.txt");
+        findHighestDegree(g);
         Graph g = loadGraph("/roadNet/roadNet-PA.txt");
-//        findHighestDegree(g);
+        findHighestDegree(g);
 
     }
 }
