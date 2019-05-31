@@ -51,9 +51,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-		Graph g = loadGraph("/roadNet/roadNet-CA.txt");
+	Graph g = loadGraph("/roadNet/roadNet-CA.txt");
         findHighestDegree(g);
-		Graph g = loadGraph("/roadNet/roadNet-TX.txt");
+	Graph g = loadGraph("/roadNet/roadNet-TX.txt");
         findHighestDegree(g);
         Graph g = loadGraph("/roadNet/roadNet-PA.txt");
         findHighestDegree(g);
